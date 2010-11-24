@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara", "Mara\Mara.csproj", "{7F5042A0-60BE-4E15-B096-49742E10D331}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.Specs", "Mara.Specs\Mara.Specs.csproj", "{1AA9925C-CFA0-47ED-A3FF-DC818AEB810F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.WebDriver", "Mara.WebDriver\Mara.WebDriver.csproj", "{2B70A186-8C8B-4FDA-9C1A-63246F97EDCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.WebDriver.Specs", "Mara.WebDriver.Specs\Mara.WebDriver.Specs.csproj", "{6D6222AA-B006-4DAF-B982-025CD574F843}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.WebRequest", "Mara.WebRequest\Mara.WebRequest.csproj", "{65A564DA-3414-4430-AAE0-F5DD0FD880E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.WebRequest.Specs", "Mara.WebRequest.Specs\Mara.WebRequest.Specs.csproj", "{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{B79C70D2-2321-4A8D-9825-0195B8A2D050}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F5042A0-60BE-4E15-B096-49742E10D331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F5042A0-60BE-4E15-B096-49742E10D331}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F5042A0-60BE-4E15-B096-49742E10D331}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F5042A0-60BE-4E15-B096-49742E10D331}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AA9925C-CFA0-47ED-A3FF-DC818AEB810F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AA9925C-CFA0-47ED-A3FF-DC818AEB810F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AA9925C-CFA0-47ED-A3FF-DC818AEB810F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AA9925C-CFA0-47ED-A3FF-DC818AEB810F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B70A186-8C8B-4FDA-9C1A-63246F97EDCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B70A186-8C8B-4FDA-9C1A-63246F97EDCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B70A186-8C8B-4FDA-9C1A-63246F97EDCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B70A186-8C8B-4FDA-9C1A-63246F97EDCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D6222AA-B006-4DAF-B982-025CD574F843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D6222AA-B006-4DAF-B982-025CD574F843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D6222AA-B006-4DAF-B982-025CD574F843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D6222AA-B006-4DAF-B982-025CD574F843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65A564DA-3414-4430-AAE0-F5DD0FD880E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65A564DA-3414-4430-AAE0-F5DD0FD880E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65A564DA-3414-4430-AAE0-F5DD0FD880E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65A564DA-3414-4430-AAE0-F5DD0FD880E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B79C70D2-2321-4A8D-9825-0195B8A2D050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79C70D2-2321-4A8D-9825-0195B8A2D050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79C70D2-2321-4A8D-9825-0195B8A2D050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79C70D2-2321-4A8D-9825-0195B8A2D050}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
