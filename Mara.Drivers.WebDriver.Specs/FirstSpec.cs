@@ -15,7 +15,10 @@ namespace Mara.WebDriver.Specs {
             Mara.Server.Start();
         }
         [TearDown]
-        public void Teardown() { Page.Close(); }
+        public void Teardown() {
+            Page.Close();
+            Mara.Server.Stop();
+        }
 
         [Test]
         public void CanOpenAPageOrWhatever() {

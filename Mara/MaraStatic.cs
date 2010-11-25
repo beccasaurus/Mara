@@ -115,8 +115,12 @@ namespace Mara {
         static IServer InstantiateDefaultServer() {
             Console.WriteLine("InstantiateDefaultServer");
             Type serverType = GetTypeFromWhereverWeCan(Mara.DefaultServerName);
-            if (serverType != null)
-                return Activator.CreateInstance(serverType) as IServer;
+            if (serverType != null) {
+                var server = Activator.CreateInstance(serverType) as IServer;
+                if (server != null)
+                    server.App = Mara.App;
+                return server;
+            }
             return null;
         }
 

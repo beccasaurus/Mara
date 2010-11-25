@@ -34,7 +34,7 @@ namespace Mara {
             }
         }
 
-        public void Close()            { Page.Close();        }
+        public void Close()            { } // Page.Close();        }
         public void ResetSession()     { Page.ResetSession(); }
         public void Visit(string path) { Page.Visit(path);    }
 

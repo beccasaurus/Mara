@@ -29,7 +29,7 @@ namespace Mara.Drivers {
         }
 
         public void Close() {
-            throw new NotImplementedException();
+            webdriver.Close();
         }
 
         public void ResetSession() {

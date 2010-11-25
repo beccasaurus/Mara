@@ -13,6 +13,7 @@ namespace Mara.Servers {
     public interface IServer {
         void Start();
         void Stop();
+        string App     { get; set; }
         int    Port    { get; set; }
         string Host    { get; set; }
         string AppHost { get; }
