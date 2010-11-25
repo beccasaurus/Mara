@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using Mara.Drivers;
 using Mara.Servers;
 
@@ -12,9 +13,13 @@ namespace Mara {
      */
     public partial class Mara {
 
+        public static string DefaultDriverName = "Mara.Drivers.WebDriver";
+        public static string DefaultServerName = "Mara.Servers.XSP"; // <--- should be Cassini on Windows
+
         static string  _app;
         static string  _appHost;
         static IDriver _driver;
+        static IServer _server;
 
         // The path to an ASP.NET (MVC) web application that Mara.Server 
         // will boot up if Mara.RunServer isn't set to false
@@ -31,7 +36,16 @@ namespace Mara {
 
         public static bool RunServer = true;
 
-        public static IServer Server { get; set; }
+        public static IServer Server {
+            get {
+                if (_server == null) _server = InstantiateDefaultServer();
+                return _server;
+            }
+            set {
+                if (_server != null) _server.Stop();
+                _server = value;
+            }
+        }
 
         public static string AppHost {
             get {
@@ -41,13 +55,9 @@ namespace Mara {
             set { _appHost = value; }
         }
 
-        public static string DefaultDriverName = "Mara.Drivers.WebDriver";
-        public static string DefaultServerName = "Mara.Servers.XSPServer"; // <--- should be Cassini on Windows
-
         public static IDriver Driver {
             get {
-                if (_driver == null)
-                    _driver = InstantiateDefaultDriver();
+                if (_driver == null) _driver = InstantiateDefaultDriver();
                 return _driver;
             }
             set {
@@ -95,7 +105,39 @@ namespace Mara {
         }
 
         static IDriver InstantiateDefaultDriver() {
-            Console.WriteLine("I want to instantiate a: {0}", Mara.DefaultDriverName);
+            Console.WriteLine("InstantiateDefaultDriver");
+            Type driverType = GetTypeFromWhereverWeCan(Mara.DefaultDriverName);
+            if (driverType != null)
+                return Activator.CreateInstance(driverType) as IDriver;
+            return null;
+        }
+
+        static IServer InstantiateDefaultServer() {
+            Console.WriteLine("InstantiateDefaultServer");
+            Type serverType = GetTypeFromWhereverWeCan(Mara.DefaultServerName);
+            if (serverType != null)
+                return Activator.CreateInstance(serverType) as IServer;
+            return null;
+        }
+
+        static Type GetTypeFromWhereverWeCan(string typeFullName) {
+            // Try finding the type in this assembly
+            Type type = Type.GetType(typeFullName);
+            if (type != null) return type;
+
+            // Try finding the type in any of our references assemblies
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+                type = assembly.GetType(typeFullName);
+                if (type != null) return type;
+            }
+
+            // Try loading up a DLL with the same name as the type and finding the type in there
+            var dll = typeFullName + ".dll";
+            if (File.Exists(dll)) {
+                type = Assembly.LoadFile(dll).GetType(typeFullName);
+                if (type != null) return type;
+            }
+
             return null;
         }
     }
