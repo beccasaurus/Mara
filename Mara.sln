@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.Drivers.WebDriver.Spec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.Servers.XSP", "Mara.Servers.XSP\Mara.Servers.XSP.csproj", "{32D3EDD0-3123-46B3-82B1-51D3A01CACB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.Servers.XSP.Specs", "Mara.Servers.XSP.Specs\Mara.Servers.XSP.Specs.csproj", "{705047D8-72FB-4797-BE21-924A3C7BDF59}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.NUnit", "Mara.NUnit\Mara.NUnit.csproj", "{89116F69-5CC9-46D4-A0DA-9E8B602574B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.Servers.Cassini", "Mara.Servers.Cassini\Mara.Servers.Cassini.csproj", "{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +41,14 @@ Global
 		{32D3EDD0-3123-46B3-82B1-51D3A01CACB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32D3EDD0-3123-46B3-82B1-51D3A01CACB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32D3EDD0-3123-46B3-82B1-51D3A01CACB5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{705047D8-72FB-4797-BE21-924A3C7BDF59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{705047D8-72FB-4797-BE21-924A3C7BDF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{705047D8-72FB-4797-BE21-924A3C7BDF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{705047D8-72FB-4797-BE21-924A3C7BDF59}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89116F69-5CC9-46D4-A0DA-9E8B602574B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{89116F69-5CC9-46D4-A0DA-9E8B602574B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89116F69-5CC9-46D4-A0DA-9E8B602574B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89116F69-5CC9-46D4-A0DA-9E8B602574B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

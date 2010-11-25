@@ -14,7 +14,20 @@ namespace Mara {
     public partial class Mara {
 
         public static string DefaultDriverName = "Mara.Drivers.WebDriver";
-        public static string DefaultServerName = "Mara.Servers.XSP"; // <--- should be Cassini on Windows
+
+        static string _defaultServerName;
+        public static string DefaultServerName {
+            get {
+                if (_defaultServerName != null)
+                    return _defaultServerName;
+
+                if (Type.GetType("Mono.Runtime") != null)
+                    return "Mara.Servers.XSP";
+                else
+                    return "Mara.Servers.Cassini";
+            }
+            set { _defaultServerName = value; }
+        }
 
         static string  _app;
         static string  _appHost;
@@ -109,7 +122,8 @@ namespace Mara {
             Type driverType = GetTypeFromWhereverWeCan(Mara.DefaultDriverName);
             if (driverType != null)
                 return Activator.CreateInstance(driverType) as IDriver;
-            return null;
+            throw new Exception("Failed to instantiate Mana Default Driver: " + Mara.DefaultDriverName + 
+                                ".  Please set Mana.Driver manually or ensure that " + Mara.DefaultDriverName + ".dll is in the current directory");
         }
 
         static IServer InstantiateDefaultServer() {
@@ -121,7 +135,8 @@ namespace Mara {
                     server.App = Mara.App;
                 return server;
             }
-            return null;
+            throw new Exception("Failed to instantiate Mana Default Server: " + Mara.DefaultServerName + 
+                                ".  Please set Mana.Server manually or ensure that " + Mara.DefaultServerName + ".dll is in the current directory");
         }
 
         static Type GetTypeFromWhereverWeCan(string typeFullName) {
@@ -136,7 +151,7 @@ namespace Mara {
             }
 
             // Try loading up a DLL with the same name as the type and finding the type in there
-            var dll = typeFullName + ".dll";
+            var dll = Path.GetFullPath(typeFullName + ".dll");
             if (File.Exists(dll)) {
                 type = Assembly.LoadFile(dll).GetType(typeFullName);
                 if (type != null) return type;
