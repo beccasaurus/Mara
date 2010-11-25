@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mara.WebRequest.Specs")]
+[assembly: AssemblyTitle("Mara.XSPServer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mara.WebRequest.Specs")]
+[assembly: AssemblyProduct("Mara.XSPServer")]
 [assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ddf0029a-7fce-4063-b64f-c7d7f2367bd2")]
+[assembly: Guid("86e4e149-d6d6-4ba1-b6db-1639713dac1f")]
 
 // Version information for an assembly consists of the following four values:
 //

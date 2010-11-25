@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Mara.WebRequest.Specs {
+namespace Mara.CassiniServer.Specs {
     public class Class1 {
     }
 }

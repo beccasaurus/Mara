@@ -1,17 +1,20 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Text;
+using Mara.Drivers;
+using Mara.Servers;
 
 namespace Mara {
 
     /*
-     * Mara offers the main API for working with Mara configuration 
-     * and getting drivers, etc
+     * This contains the static methods for Mara
+     *
+     * This offers the main API for working with Mara configuration 
      */
-    public class Mara {
+    public partial class Mara {
 
-        static string _app;
+        static string  _app;
+        static string  _appHost;
+        static IDriver _driver;
 
         // The path to an ASP.NET (MVC) web application that Mara.Server 
         // will boot up if Mara.RunServer isn't set to false
@@ -26,10 +29,31 @@ namespace Mara {
             }
         }
 
-        public string DefaultDriverClass = "Mara.WebDriver"; // <--- if available ...
+        public static bool RunServer = true;
 
-        public static IMara Driver {
-            get { return null; }
+        public static IServer Server { get; set; }
+
+        public static string AppHost {
+            get {
+                if (_appHost != null) return _appHost;
+                else                  return (Server == null) ? null : Server.AppHost;
+            }
+            set { _appHost = value; }
+        }
+
+        public static string DefaultDriverName = "Mara.Drivers.WebDriver";
+        public static string DefaultServerName = "Mara.Servers.XSPServer"; // <--- should be Cassini on Windows
+
+        public static IDriver Driver {
+            get {
+                if (_driver == null)
+                    _driver = InstantiateDefaultDriver();
+                return _driver;
+            }
+            set {
+                if (_driver != null) _driver.Close();
+                _driver = value;
+            }
         }
 
         // Private Helper Methods
@@ -67,6 +91,11 @@ namespace Mara {
             }
             
             // else return null, meaning that we couldn't find it
+            return null;
+        }
+
+        static IDriver InstantiateDefaultDriver() {
+            Console.WriteLine("I want to instantiate a: {0}", Mara.DefaultDriverName);
             return null;
         }
     }

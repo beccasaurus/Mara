@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Mara {
+namespace Mara.Drivers {
 
     /*
-     * All Mara drivers implement IMara
+     * All Mara drivers must implement Mara.IDriver
      * 
      * This interface has the Visit(), CurrentPath(), FillIn(), etc methods
      */
-    public interface IMara {
+    public interface IDriver {
 
+        void Close();
         void ResetSession();
-
         void Visit(string path);
 
         string Body        { get; }

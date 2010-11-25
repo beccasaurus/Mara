@@ -1,0 +1,44 @@
+html {
+  font: 15px/1.5em Helvetica, Arial, Verdana, sans-serif;
+}
+body {
+  background: black;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(black), to(white));
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+header, header a {
+  color: white;
+}
+header ul {
+  list-style-type: none;
+  position: absolute;
+  top:   0;
+  right: 10;
+}
+header, header ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+#content {
+  border: 1px dotted white;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  clear: left;
+  margin: 0 15px 0 15px;
+  -webkit-box-shadow: 2px 2px 15px black;
+}
+
+footer {
+  font-size: 11px;
+  text-align: center;
+  margin-top: 7px;
+}

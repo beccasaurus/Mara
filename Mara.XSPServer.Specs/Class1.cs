@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Mara.WebRequest.Specs {
+namespace Mara.XSPServer.Specs {
     public class Class1 {
     }
 }

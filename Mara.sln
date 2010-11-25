@@ -13,7 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.WebRequest", "Mara.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.WebRequest.Specs", "Mara.WebRequest.Specs\Mara.WebRequest.Specs.csproj", "{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{B79C70D2-2321-4A8D-9825-0195B8A2D050}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.XSPServer", "Mara.XSPServer\Mara.XSPServer.csproj", "{06DF90CA-9653-4D31-96B9-FC47347EFC47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.XSPServer.Specs", "Mara.XSPServer.Specs\Mara.XSPServer.Specs.csproj", "{75C4BF68-BF3E-48EE-8520-CC20CE3BBC32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.CassiniServer", "Mara.CassiniServer\Mara.CassiniServer.csproj", "{69941075-10DE-46F3-BC4D-3AB83D04E989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.CassiniServer.Specs", "Mara.CassiniServer.Specs\Mara.CassiniServer.Specs.csproj", "{1F9382A5-6A4A-45CF-A20F-DB2CF17713AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +51,22 @@ Global
 		{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16ADCFC0-8BF9-434E-9CEF-B051EB4177F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B79C70D2-2321-4A8D-9825-0195B8A2D050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B79C70D2-2321-4A8D-9825-0195B8A2D050}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B79C70D2-2321-4A8D-9825-0195B8A2D050}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B79C70D2-2321-4A8D-9825-0195B8A2D050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06DF90CA-9653-4D31-96B9-FC47347EFC47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06DF90CA-9653-4D31-96B9-FC47347EFC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06DF90CA-9653-4D31-96B9-FC47347EFC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06DF90CA-9653-4D31-96B9-FC47347EFC47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75C4BF68-BF3E-48EE-8520-CC20CE3BBC32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75C4BF68-BF3E-48EE-8520-CC20CE3BBC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75C4BF68-BF3E-48EE-8520-CC20CE3BBC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75C4BF68-BF3E-48EE-8520-CC20CE3BBC32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69941075-10DE-46F3-BC4D-3AB83D04E989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69941075-10DE-46F3-BC4D-3AB83D04E989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69941075-10DE-46F3-BC4D-3AB83D04E989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69941075-10DE-46F3-BC4D-3AB83D04E989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F9382A5-6A4A-45CF-A20F-DB2CF17713AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F9382A5-6A4A-45CF-A20F-DB2CF17713AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F9382A5-6A4A-45CF-A20F-DB2CF17713AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F9382A5-6A4A-45CF-A20F-DB2CF17713AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

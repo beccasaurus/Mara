@@ -5,18 +5,17 @@ using Mara;
 namespace Mara.WebDriver.Specs {
 
     [TestFixture]
-    public class FirstSpec {
-
-        IMara page;
-
-        [SetUp]
-        public void Setup() {
-            page = Mara.Driver;
-        }
+    public class FirstSpec : Mara {
 
         [Test]
         public void CanOpenAPageOrWhatever() {
+            Visit("/");
+            Assert.That(Page.Body, Is.StringContaining("Mara test application"));
+            Assert.That(Page.Body, Is.Not.StringContaining("About this site"));
             
+            Visit("/About.aspx");
+            Assert.That(Page.Body, Is.StringContaining("About this site"));
+            Assert.That(Page.Body, Is.Not.StringContaining("Mara test application"));
         }
     }
 }

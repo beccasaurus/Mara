@@ -1,10 +1,17 @@
 ﻿using System;
-using Mara.Drivers;
 
-namespace Mara {
+namespace Mara.Drivers {
 
-    // Selenium-WebDriver implementation of IMara
-    public class WebDriver : IDriver {
+    /*
+     * Baseclass for IDriver implementations that gives you ... (not sure yet)
+     * 
+     * You don't have to inherit from this, it's totally optional!
+     */
+    public abstract class Driver : IDriver {
+
+        public void Close() {
+            throw new NotImplementedException();
+        }
 
         public void ResetSession() {
             throw new NotImplementedException();

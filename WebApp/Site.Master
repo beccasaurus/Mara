@@ -2,10 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>Example WebApp for Mara</title>
+  <link rel="stylesheet" type="text/css" href="/public/styles.css" />
+  <script type="text/javascript" href="/public/jquery.js"></script>
+  <script type="text/javascript" href="/public/application.js"></script>
 </head>
 <body>
-  <div>
+  <header>
+    <h1><a href="/">Mara</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/About.aspx">About</a></li>
+        <li><a href="/Form.aspx">Form</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section id="content">
     <asp:ContentPlaceHolder ID="Container" runat="server"></asp:ContentPlaceHolder>
-  </div>
+  </section>
+  <footer>
+    Mara is released under the MIT license.
+  </footer>
 </body>
 </html>

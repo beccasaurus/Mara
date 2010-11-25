@@ -2,8 +2,11 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Mara;
+using Mara.Servers;
 
 namespace Mara.Specs {
+
+    class TestServer : Server {}
 
     // We'll probably break this up into more specs as it grows ...
     [TestFixture]
@@ -12,7 +15,9 @@ namespace Mara.Specs {
         [SetUp]
         public void Setup() {
             // reset defaults
-            Mara.App = null;
+            Mara.App       = null;
+            Mara.AppHost   = null;
+            Mara.RunServer = true;
         }
 
         [Test]
@@ -34,24 +39,42 @@ namespace Mara.Specs {
             Assert.That(Mara.App, Is.Not.EqualTo(Path.GetFullPath(Directory.GetCurrentDirectory())));
         }
 
-        [Test][Ignore("Pending")]
-        public void Mara_AppHost_DefaultsToLocalhost() {
+        [Test]
+        public void Mara_AppHost_DefaultsToAppHostFromServer() {
+            Mara.Server = null;
+            Assert.Null(Mara.AppHost);
+
+            Mara.Server = new TestServer { Port = 1234, Host = "localhost" };
+            Assert.That(Mara.AppHost, Is.EqualTo("http://localhost:1234"));
+
+            Mara.Server = new TestServer { Port = 5678, Host = "localhost" };
+            Assert.That(Mara.AppHost, Is.EqualTo("http://localhost:5678"));
         }
 
-        [Test][Ignore("Pending")]
+        [Test]
         public void Mara_AppHost_CanBeConfigured() {
+            Mara.Server = null;
+            Assert.Null(Mara.AppHost);
+
+            Mara.AppHost = "http://www.google.com";
+            Assert.That(Mara.AppHost, Is.EqualTo("http://www.google.com"));
         }
 
-        [Test][Ignore("Pending")]
+        [Test]
         public void Mara_RunServer_DefaultsToTrue() {
+            Assert.True(Mara.RunServer);
         }
 
-        [Test][Ignore("Pending")]
+        [Test]
         public void Mara_RunServer_CanBeConfigured() {
+            Assert.True(Mara.RunServer);
+
+            Mara.RunServer = false;
+
+            Assert.False(Mara.RunServer);
         }
 
         [Test][Ignore("Pending")]
-        public void Mara_RunServer_ActuallyDoesntRunIfSetToFalse() {
-        }
+        public void Mara_RunServer_ActuallyDoesntRunIfSetToFalse() { }
     }
 }
