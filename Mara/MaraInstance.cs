@@ -21,6 +21,17 @@ namespace Mara {
 
         IDriver _page;
 
+        // This can be used in the [SetUp] part of your testing framework to setup Mara
+        public void Initialize() {
+            Mara.Server.Start();
+        }
+
+        // This can be used in the [TearDown] part of your testing framework to teardown Mara
+        public void Shutdown() {
+            Mara.Server.Stop();
+            Close();
+        }
+
         // This is the actual IDriver that Mara uses in the background
         // You can set this to use a different driver.
         public IDriver Page {
@@ -34,7 +45,7 @@ namespace Mara {
             }
         }
 
-        public void Close()            { } // Page.Close();        }
+        public void Close()            { Page.Close();        }
         public void ResetSession()     { Page.ResetSession(); }
         public void Visit(string path) { Page.Visit(path);    }
 

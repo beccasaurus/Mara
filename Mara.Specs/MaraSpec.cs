@@ -6,7 +6,14 @@ using Mara.Servers;
 
 namespace Mara.Specs {
 
-    class TestServer : Server {}
+    class TestServer : IServer {
+        public void Start() { }
+        public void Stop() { }
+        public string App { get; set; }
+        public int Port { get; set; }
+        public string Host { get; set; }
+        public string AppHost { get { return null; } }
+    }
 
     // We'll probably break this up into more specs as it grows ...
     [TestFixture]

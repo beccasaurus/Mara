@@ -5,20 +5,7 @@ using Mara;
 namespace Mara.WebDriver.Specs {
 
     [TestFixture]
-    public class FirstSpec : Mara {
-
-        // Move into an NUnit-specific baseclass ...
-        [SetUp]
-        public void Setup() {
-            // if this could lazily initialize, that would be nice
-            Console.WriteLine("SERVER: {0}", Mara.Server);
-            Mara.Server.Start();
-        }
-        [TearDown]
-        public void Teardown() {
-            Page.Close();
-            Mara.Server.Stop();
-        }
+    public class FirstSpec : MaraTestFixture {
 
         [Test]
         public void CanOpenAPageOrWhatever() {

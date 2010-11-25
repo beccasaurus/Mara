@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{605249F8-3507-41CD-9BBC-5D3C22E63F38}</ProjectGuid>
+    <ProjectGuid>{89116F69-5CC9-46D4-A0DA-9E8B602574B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mara.Drivers.WebDriver.Specs</RootNamespace>
-    <AssemblyName>Mara.Drivers.WebDriver.Specs</AssemblyName>
+    <RootNamespace>Mara.NUnit</RootNamespace>
+    <AssemblyName>Mara.NUnit</AssemblyName>
     <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,24 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="NUnitSampleTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mara.Drivers.WebDriver\Mara.Drivers.WebDriver.csproj">
-      <Project>{3150A5EE-F3B5-4DD4-8754-94986A68CB56}</Project>
-      <Name>Mara.Drivers.WebDriver</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mara.NUnit\Mara.NUnit.csproj">
-      <Project>{89116F69-5CC9-46D4-A0DA-9E8B602574B9}</Project>
-      <Name>Mara.NUnit</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mara.Servers.XSP\Mara.Servers.XSP.csproj">
-      <Project>{32D3EDD0-3123-46B3-82B1-51D3A01CACB5}</Project>
-      <Name>Mara.Servers.XSP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Mara\Mara.csproj">
       <Project>{7F5042A0-60BE-4E15-B096-49742E10D331}</Project>
       <Name>Mara</Name>
