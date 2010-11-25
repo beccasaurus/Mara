@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Net;
-
 using Mono.WebServer;
-
 using Mara;
 
 namespace Mara.Servers {
@@ -11,8 +9,7 @@ namespace Mara.Servers {
      * ...
      * ...
      */
-    public class XSP : IServer {
-        int _port = 8090; // TODO use something global like Mara.ServerPort ?
+    public class XSP : Server, IServer {
         ApplicationServer _server;
 
         public void Start() {
@@ -28,22 +25,6 @@ namespace Mara.Servers {
         public void Stop() {
             Console.WriteLine("XSP STOP");
             _server.Stop();
-        }
-
-        public string App  { get; set; }
-
-        public int Port {
-            get { return _port;  }
-            set { _port = value; }
-        }
-
-        public string Host {
-            get { return "localhost"; }
-            set { }
-        }
-
-        public string AppHost {
-            get { return string.Format("http://{0}:{1}", Host, Port); }
         }
     }
 }

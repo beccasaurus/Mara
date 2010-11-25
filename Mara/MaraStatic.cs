@@ -13,6 +13,9 @@ namespace Mara {
      */
     public partial class Mara {
 
+        public static int    Port = 8090;
+        public static string Host = "localhost";
+
         public static string DefaultDriverName = "Mara.Drivers.WebDriver";
 
         static string _defaultServerName;
@@ -122,6 +125,8 @@ namespace Mara {
             Type driverType = GetTypeFromWhereverWeCan(Mara.DefaultDriverName);
             if (driverType != null)
                 return Activator.CreateInstance(driverType) as IDriver;
+            // TODO set some default properties on the driver?
+
             throw new Exception("Failed to instantiate Mana Default Driver: " + Mara.DefaultDriverName + 
                                 ".  Please set Mana.Driver manually or ensure that " + Mara.DefaultDriverName + ".dll is in the current directory");
         }
@@ -129,12 +134,10 @@ namespace Mara {
         static IServer InstantiateDefaultServer() {
             Console.WriteLine("InstantiateDefaultServer");
             Type serverType = GetTypeFromWhereverWeCan(Mara.DefaultServerName);
-            if (serverType != null) {
-                var server = Activator.CreateInstance(serverType) as IServer;
-                if (server != null)
-                    server.App = Mara.App;
-                return server;
-            }
+            if (serverType != null)
+                return Activator.CreateInstance(serverType) as IServer;
+            // TODO set some default properties on the server?
+
             throw new Exception("Failed to instantiate Mana Default Server: " + Mara.DefaultServerName + 
                                 ".  Please set Mana.Server manually or ensure that " + Mara.DefaultServerName + ".dll is in the current directory");
         }
