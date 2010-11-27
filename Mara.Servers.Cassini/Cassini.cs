@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Sockets;
 using Mara;
 
 namespace Mara.Servers {
@@ -13,16 +14,25 @@ namespace Mara.Servers {
 
         public void Start() {
             _server = new Microsoft.VisualStudio.WebHost.Server(Port, "/", App);
-            _server.Start();
 
-            // TODO write code that'll wait for the server to respond instead of sleeping
-            Console.WriteLine("Cassini started");
-            System.Threading.Thread.Sleep(1000);
+            Console.Write("Cassini starting ... ");
+            try {
+                _server.Start();
+            } catch (SocketException ex) {
+                //throw new Exception(string.Format("Couldn't start Cassini ... do you already have something running on port {0}?\n{1}",
+                //        Port, ex.Message));
+                Console.WriteLine("Cassini complained about something: {0}", ex.Message);
+            }
+            // Mara.WaitForLocalPortToBecomeUnavailable(Port);
+            System.Threading.Thread.Sleep(3000); // it's not happy, let's just keep sleeping for now FIXME
+            Console.WriteLine("done");
         }
 
         public void Stop() {
-            Console.WriteLine("Cassini STOP");
+            Console.Write("Cassini stopping ... ");
             _server.Stop();
+            //Mara.WaitForLocalPortToBecomeAvailable(Port); // meh
+            Console.WriteLine("done");
         }
     }
 }

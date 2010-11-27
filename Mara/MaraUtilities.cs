@@ -43,7 +43,7 @@ namespace Mara {
             var localhost = (IPAddress) Dns.GetHostAddresses("localhost")[0];
 
             try {
-                var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                var sock = new Socket(localhost.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 sock.Connect(localhost, port);
                 if (sock.Connected == true)  // Port is in use and connection is successful
                     return false;

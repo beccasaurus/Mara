@@ -13,7 +13,7 @@ namespace Mara {
      */
     public partial class Mara {
 
-        public static int    Port = 8090;
+        public static int    Port = 8091;
         public static string Host = "localhost";
 
         public static string DefaultDriverName = "Mara.Drivers.WebDriver";

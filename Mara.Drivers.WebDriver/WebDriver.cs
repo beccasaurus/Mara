@@ -195,7 +195,7 @@ namespace Mara.Drivers {
 
         public void Close() {
             StopSeleniumStandalone();
-            //webdriver.Close();
+            webdriver.Close();
         }
 
         public void ResetSession() {
@@ -205,21 +205,27 @@ namespace Mara.Drivers {
         public void Visit(string path) {
             Console.WriteLine("WebDriver.Visit navigating to {0}{1}", Mara.AppHost, path);
 
-            //webdriver.Navigate().GoToUrl(Mara.AppHost + path);
-            webdriver.Url = Mara.AppHost + path;
+            // The ChromeDriver hates life ...
+            if (Browser == "chrome")
+                for (var i = 0; i < 10; i ++)
+                    if (TryToVisitInChrome(path))
+                        break;
+                    else {
+                        Console.WriteLine("Chrome didn't want to visit {0} ... trying again ... ", path);
+                        System.Threading.Thread.Sleep(100);
+                    }   
+            else
+                webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+        }
 
-            //Console.WriteLine("... waiting for chrome ...");
-            //System.Threading.Thread.Sleep(2000);
-            
-            // Making Chrome work ..
-            //for (var i = 0; i < 10; i ++) {
-            //    if (PageHasLoaded)
-            //        break;
-            //    else {
-            //        Console.WriteLine("Waiting for page to fully load ...");
-            //        System.Threading.Thread.Sleep(200);
-            //    }   
-            //}
+        bool TryToVisitInChrome(string path) {
+            webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+            try {
+                webdriver.GetWindowHandle();
+                return true;
+            } catch (NullReferenceException) {
+                return false;
+            } 
         }
 
         public string Body {
