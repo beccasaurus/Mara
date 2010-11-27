@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using Mara;
 
-namespace Mara.WebDriver.Specs {
+namespace Mara.Drivers.WebDriverSpecs {
 
     [TestFixture]
     public class FirstSpec : MaraTestFixture {

@@ -43,9 +43,6 @@
     <Reference Include="WebDriver.Firefox">
       <HintPath>lib\selenium-dotnet-2.0a6\WebDriver.Firefox.dll</HintPath>
     </Reference>
-    <Reference Include="WebDriver.IE">
-      <HintPath>lib\selenium-dotnet-2.0a6\WebDriver.IE.dll</HintPath>
-    </Reference>
     <Reference Include="WebDriver.Remote">
       <HintPath>lib\selenium-dotnet-2.0a6\WebDriver.Remote.dll</HintPath>
     </Reference>

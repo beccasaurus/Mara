@@ -13,10 +13,7 @@ namespace Mara.Servers {
      *
      * You still must implement Start() and Stop()
      */
-    public abstract class Server : IServer {
-
-        public virtual void Start() { throw new NotImplementedException(); }
-        public virtual void Stop()  { throw new NotImplementedException(); }
+    public abstract class Server {
 
         string _app;
         public string App  {

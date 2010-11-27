@@ -1,9 +1,25 @@
+section, header, nav, footer {
+  display: block;
+}
+
 html {
   font: 15px/1.5em Helvetica, Arial, Verdana, sans-serif;
 }
-body {
-  background: black;
+
+html, body {
+  margin:  0;
+  padding: 0;
+}
+
+#background {
+  z-index:    1;
+  position:   fixed;
+  top:        0;
+  left:       0;
+  height:     100%;
+  width:      100%;
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(black), to(white));
+  background: -moz-linear-gradient(top, black, white);
 }
 
 a {
@@ -16,28 +32,41 @@ a:hover {
 header, header a {
   color: white;
 }
-header ul {
+header h1 {
+  position: relative;
+  z-index: 1000;
+  padding: 20px 0 0 20px;
+}
+header nav ul {
   list-style-type: none;
-  position: absolute;
-  top:   0;
-  right: 10;
+  position:        absolute;
+  z-index:         1000;
+  top:             0;
+  right:           10;
 }
 header, header ul li {
-  display: inline;
+  display:      inline;
   margin-right: 10px;
 }
 
 #content {
-  border: 1px dotted white;
-  background-color: white;
-  border-radius: 5px;
-  padding: 10px;
-  clear: left;
-  margin: 0 15px 0 15px;
+  clear:      left;
+  position:   relative;
+  z-index:    1000;
+  background: white;
+  padding:    10px;
+  margin:     0 15px 0 15px;
+
+  border-radius:      5px;
+  -moz-border-radius: 5px;
+
   -webkit-box-shadow: 2px 2px 15px black;
+  -moz-box-shadow:    2px 2px 15px black;
 }
 
 footer {
+  position: relative;
+  z-index: 1000;
   font-size: 11px;
   text-align: center;
   margin-top: 7px;
