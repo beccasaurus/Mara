@@ -10,9 +10,11 @@ namespace Mara.Drivers.WebDriverSpecs {
 
         [SetUp]
         public void Setup() {
-            Environment.SetEnvironmentVariable("BROWSER",  null);
-            Environment.SetEnvironmentVariable("REMOTE",   null);
-            Environment.SetEnvironmentVariable("HTMLUNIT", null);
+            Environment.SetEnvironmentVariable("BROWSER",       null);
+            Environment.SetEnvironmentVariable("REMOTE",        null);
+            Environment.SetEnvironmentVariable("HTMLUNIT",      null);
+            Environment.SetEnvironmentVariable("SELENIUM_JAR",  null);
+            Environment.SetEnvironmentVariable("SELENIUM_PORT", null);
         }
 
         [Test]
@@ -172,9 +174,27 @@ namespace Mara.Drivers.WebDriverSpecs {
             Assert.That(driver.RunSeleniumStandalone, Is.EqualTo(false));
         }
 
-        [Test][Ignore]
-        public void ShouldBeAbleToSetPathToSeleniumStandaloneServerJarViaEnvironmentVariable() {
+        [Test]
+        public void CanSetPathToSeleniumStandaloneServerJarViaEnvironmentVariable() {
+            Assert.That(new WebDriver().SeleniumServerJar, Is.EqualTo(WebDriver.DefaultSeleniumServerJar));
+            
+            Environment.SetEnvironmentVariable("SELENIUM_JAR", "../path/to/the.jar");
 
+            Assert.That(new WebDriver().SeleniumServerJar, Is.EqualTo("../path/to/the.jar"));
+        }
+
+        [Test]
+        public void CanSetPathToSeleniumStandaloneServerPortViaEnvironmentVariable() {
+            Assert.That(new WebDriver().SeleniumServerPort, Is.EqualTo(WebDriver.DefaultSeleniumServerPort));
+            
+            Environment.SetEnvironmentVariable("SELENIUM_PORT", "4321");
+
+            Assert.That(new WebDriver().SeleniumServerPort, Is.EqualTo(4321));
+            Assert.Null(new WebDriver().Remote);
+
+            // If we DO use a Remote driver, it should use this port ...
+            Environment.SetEnvironmentVariable("HTMLUNIT", "true");
+            Assert.That(new WebDriver().Remote, Is.EqualTo("http://localhost:4321/wd/hub"));
         }
     }
 }

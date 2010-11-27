@@ -23,6 +23,7 @@ namespace Mara.Drivers {
         public static string DefaultSeleniumServerJar  = "selenium-server-standalone.jar";
 
         public WebDriver() {
+            SetSeleniumSettingsFromEnvironmentVariables();
             SetBrowserAndRemoteFromEnvironmentVariables();
         }
 
@@ -47,6 +48,17 @@ namespace Mara.Drivers {
 
             if (browserName != null) Browser = browserName;
             if (remoteUri   != null) Remote  = remoteUri;
+        }
+
+        void SetSeleniumSettingsFromEnvironmentVariables() {
+            var seleniumJar  = Environment.GetEnvironmentVariable("SELENIUM_JAR");
+            var seleniumPort = Environment.GetEnvironmentVariable("SELENIUM_PORT");
+
+            if (seleniumJar != null)
+                SeleniumServerJar = seleniumJar;
+
+            if (seleniumPort != null)
+                SeleniumServerPort = int.Parse(seleniumPort);
         }
 
         static void OverrideBrowserPathsFromEnvironmentVariables() {
@@ -234,20 +246,24 @@ namespace Mara.Drivers {
             Console.WriteLine("StartSeleniumStandalone");
             _seleniumStandalone = new Process();
             _seleniumStandalone.StartInfo.FileName               = "java";
-            _seleniumStandalone.StartInfo.Arguments              = "-jar " + Path.GetFullPath(SeleniumServerJar);
+            _seleniumStandalone.StartInfo.Arguments              = string.Format("-jar {0} -port {1}", Path.GetFullPath(SeleniumServerJar), SeleniumServerPort);
             _seleniumStandalone.StartInfo.UseShellExecute        = false;
             _seleniumStandalone.StartInfo.CreateNoWindow         = true;
-            _seleniumStandalone.StartInfo.RedirectStandardOutput = true;
+            if (Environment.GetEnvironmentVariable("SELENIUM_LOG") == null) // if there's no SELENIUM_LOG variable, don't print STDOUT
+                _seleniumStandalone.StartInfo.RedirectStandardOutput = true;
+
+            Console.Write("Selenium Standalone starting ... ");
             _seleniumStandalone.Start();
-            
-            Console.WriteLine("Waiting a few seconds for selenium standalone ... TODO: make this faster!");
-            System.Threading.Thread.Sleep(8000);
+            Mara.WaitForLocalPortToBecomeUnavailable(SeleniumServerPort);
+            Console.WriteLine("done");
         }
 
         void StopSeleniumStandalone() {
             if (_seleniumStandalone != null) {
-                Console.WriteLine("StopSeleniumStandalone");
+                Console.Write("Selenium Standalone stopping ... ");
                 _seleniumStandalone.Kill();
+                Mara.WaitForLocalPortToBecomeAvailable(SeleniumServerPort);
+                Console.WriteLine("done");
             }
         }
     }

@@ -30,7 +30,9 @@ namespace Mara {
         // This can be used in the [TearDown] part of your testing framework to teardown Mara
         public void Shutdown() {
             Console.WriteLine("Mara.Shutdown()");
+            Console.WriteLine("  Server.Stop ...");
             Mara.Server.Stop();
+            Console.WriteLine("  Close() driver ...");
             Close();
         }
 

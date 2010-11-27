@@ -18,17 +18,18 @@ namespace Mara.Servers {
             Console.WriteLine("XSP.Start()");
             _server = new ApplicationServer(new XSPWebSource(IPAddress.Any, Port));
 			_server.AddApplicationsFromCommandLine(string.Format("{0}:/:{1}", Port, App));
-            _server.Start(true);
 
-            // TODO write code that'll wait for the server to respond instead of sleeping
-            Console.WriteLine("XSP2 started");
-            Console.WriteLine("Waiting for XSP to response ... TODO: make this faster!");
-            System.Threading.Thread.Sleep(4000);
+            Console.Write("XSP2 starting ... ");
+            _server.Start(true);
+            Mara.WaitForLocalPortToBecomeUnavailable(Port);
+            Console.WriteLine("done");
         }
 
         public void Stop() {
-            Console.WriteLine("XSP STOP");
+            Console.Write("XSP2 stopping ... ");
             _server.Stop();
+            // Mara.WaitForLocalPortToBecomeAvailable(Port); // meh, just kill this process ... it doesn't like to stop ...
+            Console.WriteLine("done");
         }
     }
 }

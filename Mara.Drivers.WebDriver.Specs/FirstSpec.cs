@@ -22,6 +22,7 @@ namespace Mara.Drivers.WebDriverSpecs {
 
         [SetUp]
         public void Setup() {
+            Console.WriteLine("SETUP called ... calling initialize ...");
             Initialize(); // Why doesn't the base class's SetUp get run???
             PrintVersionInfo();
         }
