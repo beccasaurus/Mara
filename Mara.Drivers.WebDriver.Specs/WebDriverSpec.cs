@@ -171,5 +171,10 @@ namespace Mara.Drivers.WebDriverSpecs {
             Assert.That(driver.Remote,  Is.EqualTo("http://some-remote-server.com:1234/foo/bar"));
             Assert.That(driver.RunSeleniumStandalone, Is.EqualTo(false));
         }
+
+        [Test][Ignore]
+        public void ShouldBeAbleToSetPathToSeleniumStandaloneServerJarViaEnvironmentVariable() {
+
+        }
     }
 }

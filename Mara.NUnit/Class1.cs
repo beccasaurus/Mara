@@ -19,11 +19,13 @@ namespace Mara {
 
         [SetUp]
         public void MaraSetUp() {
+            Console.WriteLine("MaraTearDown.SetUp");
             Initialize();
         }
 
         [TearDown]
         public void MaraTearDown() {
+            Console.WriteLine("MaraTearDown.TearDown");
             Shutdown();
         }
     }

@@ -23,11 +23,13 @@ namespace Mara {
 
         // This can be used in the [SetUp] part of your testing framework to setup Mara
         public void Initialize() {
+            Console.WriteLine("Mara.Initialize()");
             Mara.Server.Start();
         }
 
         // This can be used in the [TearDown] part of your testing framework to teardown Mara
         public void Shutdown() {
+            Console.WriteLine("Mara.Shutdown()");
             Mara.Server.Stop();
             Close();
         }

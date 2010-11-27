@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 using Mara;
@@ -133,11 +135,46 @@ namespace Mara.Drivers {
             // force to be a certain driver ... just for testing ... this will be configurable ...
             //return new ChromeDriver();
             //return new InternetExplorerDriver();
-            return new FirefoxDriver();
+            //return new FirefoxDriver();
+
+            Console.WriteLine("InstantiateWebDriver()");
+            Console.WriteLine("  Browser: {0}",               Browser);
+            Console.WriteLine("  Remote: {0}",                Remote);
+            Console.WriteLine("  RunSeleniumStandalone: {0}", RunSeleniumStandalone);
+
+            if (RunSeleniumStandalone == true)
+                StartSeleniumStandalone();
+
+            if (Remote == null)
+                return InstantiateLocalWebDriver(Browser);
+            else
+                return InstantiateRemoteWebDriver(Browser, Remote);
+        }
+
+        IWebDriver InstantiateLocalWebDriver(string browserName) {
+            Console.WriteLine("InstantiateLocalWebDriver({0})", browserName);
+			switch (browserName) {
+				case "chrome":
+                    return new ChromeDriver();
+				case "firefox":
+					return new FirefoxDriver();
+                //case "ie":
+                //    return new InternetExplorerDriver();
+				default:
+					throw new Exception("Unsupported browser: " + browserName);
+            }
+        }
+
+        IWebDriver InstantiateRemoteWebDriver(string browserName, string remote) {
+            Console.WriteLine("InstantiateRemoteWebDriver({0}, {1})", browserName, remote);
+		    var capabilities = new DesiredCapabilities(browserName, string.Empty, new Platform(PlatformType.Any));
+		    var remoteUri    = new Uri(remote); // TODO add /wd/hub here so it doesn't have to be used everyplace else
+		    return new RemoteWebDriver(remoteUri, capabilities);
         }
 
         public void Close() {
-            webdriver.Close();
+            StopSeleniumStandalone();
+            //webdriver.Close();
         }
 
         public void ResetSession() {
@@ -147,7 +184,9 @@ namespace Mara.Drivers {
         public void Visit(string path) {
             Console.WriteLine("WebDriver.Visit navigating to {0}{1}", Mara.AppHost, path);
 
-            webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+            //webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+            webdriver.Url = Mara.AppHost + path;
+
             //Console.WriteLine("... waiting for chrome ...");
             //System.Threading.Thread.Sleep(2000);
             
@@ -188,5 +227,28 @@ namespace Mara.Drivers {
                 }   
             }   
         } 
+
+        Process _seleniumStandalone;
+
+        void StartSeleniumStandalone() {
+            Console.WriteLine("StartSeleniumStandalone");
+            _seleniumStandalone = new Process();
+            _seleniumStandalone.StartInfo.FileName               = "java";
+            _seleniumStandalone.StartInfo.Arguments              = "-jar " + Path.GetFullPath(SeleniumServerJar);
+            _seleniumStandalone.StartInfo.UseShellExecute        = false;
+            _seleniumStandalone.StartInfo.CreateNoWindow         = true;
+            _seleniumStandalone.StartInfo.RedirectStandardOutput = true;
+            _seleniumStandalone.Start();
+            
+            Console.WriteLine("Waiting a few seconds for selenium standalone ... TODO: make this faster!");
+            System.Threading.Thread.Sleep(8000);
+        }
+
+        void StopSeleniumStandalone() {
+            if (_seleniumStandalone != null) {
+                Console.WriteLine("StopSeleniumStandalone");
+                _seleniumStandalone.Kill();
+            }
+        }
     }
 }

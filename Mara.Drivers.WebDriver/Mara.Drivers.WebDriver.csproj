@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mara.Drivers.WebDriver</RootNamespace>
     <AssemblyName>Mara.Drivers.WebDriver</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,20 +35,26 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebDriver.Chrome">
-      <HintPath>lib\selenium-dotnet-2.0a6\WebDriver.Chrome.dll</HintPath>
+    <Reference Include="Ionic.Zip.Reduced">
+      <HintPath>lib\selenium-r10432\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.dll">
+      <HintPath>lib\selenium-r10432\Newtonsoft.Json.dll.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Common">
-      <HintPath>lib\selenium-dotnet-2.0a6\WebDriver.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="WebDriver.Firefox">
-      <HintPath>lib\selenium-dotnet-2.0a6\WebDriver.Firefox.dll</HintPath>
+      <HintPath>lib\selenium-r10432\WebDriver.Common.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Remote">
-      <HintPath>lib\selenium-dotnet-2.0a6\WebDriver.Remote.dll</HintPath>
+      <HintPath>lib\selenium-r10432\WebDriver.Remote.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Remote.Common">
-      <HintPath>lib\selenium-dotnet-2.0a6\WebDriver.Remote.Common.dll</HintPath>
+      <HintPath>lib\selenium-r10432\WebDriver.Remote.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Firefox">
+      <HintPath>lib\selenium-r10432\WebDriver.Firefox.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Chrome">
+      <HintPath>lib\selenium-r10432\WebDriver.Chrome.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
