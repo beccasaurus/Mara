@@ -15,6 +15,7 @@ namespace Mara.Drivers.WebDriverSpecs {
             Environment.SetEnvironmentVariable("HTMLUNIT",      null);
             Environment.SetEnvironmentVariable("SELENIUM_JAR",  null);
             Environment.SetEnvironmentVariable("SELENIUM_PORT", null);
+            Environment.SetEnvironmentVariable("RUN_SELENIUM",  null);
         }
 
         [Test]
@@ -195,6 +196,17 @@ namespace Mara.Drivers.WebDriverSpecs {
             // If we DO use a Remote driver, it should use this port ...
             Environment.SetEnvironmentVariable("HTMLUNIT", "true");
             Assert.That(new WebDriver().Remote, Is.EqualTo("http://localhost:4321/wd/hub"));
+        }
+
+        [Test]
+        public void CanExplicitlySayNotToRunSeleniumStandaloneViaEnvironmentVariable() {
+            Assert.That(new WebDriver().RunSeleniumStandalone, Is.EqualTo(null)); // not configured
+
+            Environment.SetEnvironmentVariable("RUN_SELENIUM", "true");
+            Assert.That(new WebDriver().RunSeleniumStandalone, Is.EqualTo(true));
+
+            Environment.SetEnvironmentVariable("RUN_SELENIUM", "false");
+            Assert.That(new WebDriver().RunSeleniumStandalone, Is.EqualTo(false));
         }
     }
 }

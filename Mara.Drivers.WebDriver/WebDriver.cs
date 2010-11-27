@@ -25,6 +25,15 @@ namespace Mara.Drivers {
         public WebDriver() {
             SetSeleniumSettingsFromEnvironmentVariables();
             SetBrowserAndRemoteFromEnvironmentVariables();
+
+            // Override whether or not to run the selenium standalone server
+            var runSelenium = Environment.GetEnvironmentVariable("RUN_SELENIUM");
+            if (runSelenium != null) {
+                if (runSelenium == "true")
+                    RunSeleniumStandalone = true;
+                else if (runSelenium == "false")
+                    RunSeleniumStandalone = false;
+            }
         }
 
         void SetBrowserAndRemoteFromEnvironmentVariables() {
@@ -254,7 +263,7 @@ namespace Mara.Drivers {
 
             Console.Write("Selenium Standalone starting ... ");
             _seleniumStandalone.Start();
-            Mara.WaitForLocalPortToBecomeUnavailable(SeleniumServerPort);
+            Mara.WaitForLocalPortToBecomeUnavailable(SeleniumServerPort, 100, 200); // 20 seconds max ... checking every 0.1 seconds
             Console.WriteLine("done");
         }
 
