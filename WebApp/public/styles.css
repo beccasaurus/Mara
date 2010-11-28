@@ -71,3 +71,16 @@ footer {
   text-align: center;
   margin-top: 7px;
 }
+
+dl dt {
+  font-weight: bold;
+  float: left;
+  margin: 0 10px 0 20px;
+  clear: left;
+  min-width: 30px;
+}
+
+form label, form input[type="submit"] {
+  display: block;
+  margin-top: 10px;
+}

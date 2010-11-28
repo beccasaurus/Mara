@@ -11,7 +11,7 @@ namespace Mara.DriverSpecs {
      *   All()
      *   Find("...").Click()
      *   Find("...").Text
-     *   FillIn("...", "...")
+     *   ClickLink("...")
      */
     [TestFixture]
     public class ElementsSpec : MaraTest {
