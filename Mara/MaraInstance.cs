@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Mara.Drivers;
 using Mara.Servers;
 
@@ -48,6 +49,9 @@ namespace Mara {
                 _page = value;
             }
         }
+
+        public IElement       Find(string xpath) { return Page.Find(xpath); }
+        public List<IElement> All(string xpath)  { return Page.All(xpath);  }
 
         public void Close()            { Page.Close();        }
         public void ResetSession()     { Page.ResetSession(); }

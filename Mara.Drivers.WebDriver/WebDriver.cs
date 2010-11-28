@@ -16,7 +16,7 @@ namespace Mara.Drivers {
     /*
      * Mara IDriver implementation for Selenium WebDriver
      */
-    public class WebDriver : IDriver {
+    public partial class WebDriver : IDriver {
 
         public static string DefaultBrowser            = "firefox";
         public static int    DefaultSeleniumServerPort = 4444;
@@ -233,6 +233,18 @@ namespace Mara.Drivers {
 
         public string CurrentPath {
             get { throw new NotImplementedException(); }
+        }
+
+        public IElement Find(string xpath) {
+            try {
+                return new Element(webdriver.FindElement(By.XPath(xpath)));
+            } catch (NoSuchElementException) {
+                return null;
+            }
+        }
+
+        public List<IElement> All(string xpath) {
+            return Element.List( webdriver.FindElements(By.XPath(xpath)) );
         }
 
         // private methods

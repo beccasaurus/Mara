@@ -46,8 +46,44 @@ namespace IntegrationTests {
 
         [Test]
         public void CanFindElementUsingXPath_ReturnsNullIfNotFound() {
-            // TODO
+             Visit("/");
+
+             Assert.That(Find("//h2").Text, Is.EqualTo("Why is this styled?"));
+             Assert.Null(Find("//h5"));
         }
+
+        [Test][Ignore]
+        public void CanFindElementUsingXPath_BlowsUpIfNotFound() {
+             //Visit("/");
+            
+             //... should not raise ...
+             //Find("//h2")
+
+             //... should raise ...
+             //Find("//h5")
+        }
+
+        [Test]
+        public void CanFindElementsUsingXPath_ReturnsEmptyIfNotFound() {
+            Visit("/");
+
+            Assert.That(All("//p").Count, Is.EqualTo(5));
+            Assert.That(All("//p")[0].Text, Is.EqualTo("If you see this text, you're running our test suite!"));
+
+            Assert.IsEmpty(All("//strong"));
+            Assert.That(All("//strong").Count, Is.EqualTo(0));
+        }
+
+        // TODO there should be a spec for elements to make sure they work properly
+        
+        [Test][Ignore]
+        public void CanGetTheValueOfAnElement() {}
+
+        [Test][Ignore]
+        public void CanGetTheTextOfAnElement() {}
+
+        [Test][Ignore]
+        public void CanGetTheValueOfAnElementsAttribute() {}
 
         [Test][Ignore]
         public void CanFindLinkByText_ReturnsNullIfNotFound() {

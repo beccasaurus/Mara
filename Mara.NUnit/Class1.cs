@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mara;
 using Mara.Drivers;
 using NUnit.Framework;
@@ -41,6 +42,8 @@ namespace Mara {
     public class MaraTest : IDriver {
         public IDriver Page { get { return MaraSetUpFixture.MaraInstance; }}
 
+        public IElement       Find(string xpath) { return Page.Find(xpath); }
+        public List<IElement> All(string xpath)  { return Page.All(xpath);  }
         public void Close()            { Page.Close();        }
         public void ResetSession()     { Page.ResetSession(); }
         public void Visit(string path) { Page.Visit(path);    }
