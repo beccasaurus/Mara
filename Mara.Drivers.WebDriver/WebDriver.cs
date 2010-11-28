@@ -144,7 +144,7 @@ namespace Mara.Drivers {
             }
         }
 
-        IWebDriver _webdriver;
+        IWebDriver _webdriver; // TODO webdriver could be a confusing name, maybe?  I think NativeDriver is a better name.  Could be standard in all drivers
         IWebDriver webdriver {
             get {
                 if (_webdriver == null) _webdriver = InstantiateWebDriver();
@@ -197,6 +197,13 @@ namespace Mara.Drivers {
             throw new NotImplementedException();
         }
 
+        public void ClickLink(string linkText) {
+            Find("//a[text()='" + linkText + "']", true).Click();
+
+            // TESTING ... wait
+            System.Threading.Thread.Sleep(3000);
+        }
+
         public void Visit(string path) {
             Console.WriteLine("WebDriver.Visit navigating to {0}{1}", Mara.AppHost, path);
 
@@ -228,11 +235,11 @@ namespace Mara.Drivers {
         }
 
         public string CurrentUrl {
-            get { throw new NotImplementedException(); }
+            get { return webdriver.Url; }
         }
 
         public string CurrentPath {
-            get { throw new NotImplementedException(); }
+            get { return webdriver.Url.Replace(Mara.Server.AppHost, ""); } // FIXME Don't use a Global Mara.Server
         }
 
         public IElement Find(string xpath) {
@@ -241,7 +248,7 @@ namespace Mara.Drivers {
 
         public IElement Find(string xpath, bool throwExceptionIfNotFound) {
             try {
-                return new Element(webdriver.FindElement(By.XPath(xpath)));
+                return new Element(webdriver.FindElement(By.XPath(xpath)), this);
             } catch (NoSuchElementException) {
                 if (throwExceptionIfNotFound)
                     throw new ElementNotFoundException(xpath);
@@ -251,7 +258,7 @@ namespace Mara.Drivers {
         }
 
         public List<IElement> All(string xpath) {
-            return Element.List( webdriver.FindElements(By.XPath(xpath)) );
+            return Element.List(webdriver.FindElements(By.XPath(xpath)), this);
         }
 
         // private methods

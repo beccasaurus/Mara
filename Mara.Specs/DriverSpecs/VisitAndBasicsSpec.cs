@@ -29,10 +29,27 @@ namespace Mara.DriverSpecs {
         [Test][Ignore]
         public void CanVisitAbsolutePath() { }
 
-        [Test][Ignore]
-        public void CanGetCurrentPath() { }
+        [Test]
+        public void CanGetCurrentUrl() {
+            Visit("/");
+            Assert.True(CurrentUrl == Mara.Server.AppHost + "/");
 
+            Visit("/About.aspx");
+            Assert.True(CurrentUrl == Mara.Server.AppHost + "/About.aspx"); // FIXME Don't use a Global Mara.Server
+        }
+
+        [Test]
+        public void CanGetCurrentPath() {
+            Visit("/");
+            Assert.True(CurrentPath == "/");
+
+            Visit("/About.aspx");
+            Assert.True(CurrentPath == "/About.aspx");
+        }
+
+        // This should go in a group of specs that are ONLY for Drivers that support JavaScript
+        // We could use NUnit categories to specify this?
         [Test][Ignore]
-        public void CanGetCurrentUrl() { }
+        public void CanGetCurrentPathAfterBeingRedirectedViaJavaScript() { }
     }
 }

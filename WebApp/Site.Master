@@ -15,12 +15,13 @@
           <li><a href="/">Home</a></li>
           <li><a href="/About.aspx">About</a></li>
           <li><a href="/Form.aspx">Form</a></li>
+          <li><a href="/Stuff.aspx">Stuff</a></li>
         </ul>
       </nav>
     </header>
-    <section id="content">
+    <div id="content">
       <asp:ContentPlaceHolder ID="Container" runat="server"></asp:ContentPlaceHolder>
-    </section>
+    </div>
     <footer>
       Mara is released under the MIT license.
     </footer>

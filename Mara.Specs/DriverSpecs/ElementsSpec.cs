@@ -26,12 +26,11 @@ namespace Mara.DriverSpecs {
 
         [Test]
         public void CanFindElementUsingXPath_BlowsUpIfNotFound() {
-             Assert.That(Find("//h2").Text, Is.EqualTo("Why is this styled?"));
+            Assert.That(Find("//h2").Text, Is.EqualTo("Why is this styled?"));
 
-             //this.AssertThrows<ElementNotFoundException>("Could not find element with XPath: //h5", () => { Find("//h5") });
-             this.AssertThrows<ElementNotFoundException>("Could not find element with XPath: //h5", () => {
-                     Find("//h5", true);
-             });
+            this.AssertThrows<ElementNotFoundException>("Could not find element with XPath: //h5", () => {
+                Find("//h5", true);
+            });
         }
 
         [Test]
@@ -43,21 +42,55 @@ namespace Mara.DriverSpecs {
             Assert.That(All("//strong").Count, Is.EqualTo(0));
         }
 
-        [Test][Ignore]
-        public void CanGetTheValueOfAnElement() {}
+        [Test]
+        public void CanGetTheValueOfAnElement_NullIfNotPresent() {
+            ClickLink("Stuff");
+            Console.WriteLine("PAGE SOURCE (looking for DogName): {0}", Page.Body);
+            Assert.That(Find("//*[@name='DogName']").Value, Is.EqualTo("Rover"));
+            Assert.Null(Find("//pre").Value);
+        }
 
-        [Test][Ignore]
-        public void CanGetTheTextOfAnElement() {}
+        [Test]
+        public void CanGetTheTextOfAnElement_EmptyStringIfNotPresent() {
+            ClickLink("Stuff");
+            Assert.That(Find("//h1").Text, Is.EqualTo("Mara"));
+            Assert.That(Find("id('content')//h1").Text, Is.EqualTo("Miscellaneous Stuff"));
+
+            // p with newlines
+            //
+            // We try to normalize by compressing any spaces/newlines into a *single* newline
+            //
+            // After all, that fits the web very well because ANY number of spaces in 
+            // your HTML gets rendered as a single space (hence the need for &nbsp;)
+            //
+            Assert.That(Find("//p").Text, Is.EqualTo("Hi, how goes? Does it go well?"));
+            // HtmlUnit: Hi, how goes? \n Does it go well?
+            // FF:       Hi, how goes?\nDoes it go well?
+            // Chrome:   Hi, how goes? \n Does it go well?
+            // IE:       Hi, how goes? \r\nDoes it go well?
+
+            Assert.That(Find("id('i_haz_pre')//pre").Text, Is.EqualTo("I am another pre"));
+            // HtmlUnit: "I\nam\nanother\npre\n  \n\n I am another pre"
+            // FF:       I am another pre ... killed the newlines
+            // Chrome:   I am another pre
+            // IE:       I\ram\ranother\rpre
+            
+            Assert.That(Find("//pre").Text, Is.EqualTo("Dogs have names"));
+            Assert.That(Find("//*[@name='DogName']").Text, Is.EqualTo(""));
+        }
 
         [Test][Ignore]
         public void CanGetTheValueOfAnElementsAttribute() {}
 
-        [Test][Ignore]
-        public void CanFindLinkByText_ReturnsNullIfNotFound() {
-        }
-
-        [Test][Ignore]
+        [Test]
         public void CanClickLink_BlowsUpIfNotFound() {
+            this.AssertThrows<ElementNotFoundException>("Could not find element with XPath: //a[text()='No Link With This Text']", () => {
+                ClickLink("No Link With This Text");
+            });
+
+            Assert.That(CurrentPath, Is.EqualTo("/"));
+            ClickLink("Stuff");
+            Assert.That(CurrentPath, Is.EqualTo("/Stuff.aspx"));
         }
     }
 }

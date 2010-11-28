@@ -42,14 +42,19 @@ namespace Mara {
     public class MaraTest : IDriver {
         public IDriver Page { get { return MaraSetUpFixture.MaraInstance; }}
 
-        public IElement       Find(string xpath)     { return Page.Find(xpath); }
-        public IElement       Find(string a, bool b) { return Page.Find(a, b);  }
-        public List<IElement> All(string xpath)      { return Page.All(xpath);  }
-        public void Close()            { Page.Close();        }
-        public void ResetSession()     { Page.ResetSession(); }
-        public void Visit(string path) { Page.Visit(path);    }
+        // Everything below here can be copy/pasted from Mara/MaraInstance.cs
+
         public string Body        { get { return Page.Body;        }}
         public string CurrentUrl  { get { return Page.CurrentUrl;  }}
         public string CurrentPath { get { return Page.CurrentPath; }}
+
+        public IElement       Find(string xpath)                                { return Page.Find(xpath);                           }
+        public IElement       Find(string xpath, bool throwExceptionIfNotFound) { return Page.Find(xpath, throwExceptionIfNotFound); }
+        public List<IElement> All(string  xpath)                                { return Page.All(xpath);                            }
+
+        public void Close()                    { Page.Close();             }
+        public void ResetSession()             { Page.ResetSession();      }
+        public void Visit(string path)         { Page.Visit(path);         }
+        public void ClickLink(string linkText) { Page.ClickLink(linkText); }
     }
 }

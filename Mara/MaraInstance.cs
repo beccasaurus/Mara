@@ -32,7 +32,7 @@ namespace Mara {
         public void Shutdown() {
             Console.WriteLine("Mara.Shutdown()");
             Console.WriteLine("  Server.Stop ...");
-            Mara.Server.Stop();
+            Mara.Server.Stop(); // <--- oh noes!  Mara.Server is GLOBAL?  icky.  hmm ... Server/Driver need to be in instances ... TODO FIXME
             Console.WriteLine("  Close() driver ...");
             Close();
         }
@@ -50,16 +50,17 @@ namespace Mara {
             }
         }
 
-        public IElement       Find(string a)         { return Page.Find(a);    }
-        public IElement       Find(string a, bool b) { return Page.Find(a, b); }
-        public List<IElement> All(string  a)         { return Page.All(a);     }
-
-        public void Close()            { Page.Close();        }
-        public void ResetSession()     { Page.ResetSession(); }
-        public void Visit(string path) { Page.Visit(path);    }
-
         public string Body        { get { return Page.Body;        }}
         public string CurrentUrl  { get { return Page.CurrentUrl;  }}
         public string CurrentPath { get { return Page.CurrentPath; }}
+
+        public IElement       Find(string xpath)                                { return Page.Find(xpath);                           }
+        public IElement       Find(string xpath, bool throwExceptionIfNotFound) { return Page.Find(xpath, throwExceptionIfNotFound); }
+        public List<IElement> All(string  xpath)                                { return Page.All(xpath);                            }
+
+        public void Close()                    { Page.Close();             }
+        public void ResetSession()             { Page.ResetSession();      }
+        public void Visit(string path)         { Page.Visit(path);         }
+        public void ClickLink(string linkText) { Page.ClickLink(linkText); }
     }
 }
