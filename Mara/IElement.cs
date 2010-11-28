@@ -8,7 +8,7 @@ namespace Mara {
      */
     public interface IElement {
         void Click();
-        string Value { get; }
+        string Value { get; set; }
         string Text  { get; }
         string this[string attributeName] { get; }
     }

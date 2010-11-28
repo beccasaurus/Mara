@@ -51,10 +51,13 @@ namespace Mara {
         public IElement       Find(string xpath)                                { return Page.Find(xpath);                           }
         public IElement       Find(string xpath, bool throwExceptionIfNotFound) { return Page.Find(xpath, throwExceptionIfNotFound); }
         public List<IElement> All(string  xpath)                                { return Page.All(xpath);                            }
+        public object         ExecuteScript(string script)                      { return Page.ExecuteScript(script);                 }
 
-        public void Close()                    { Page.Close();             }
-        public void ResetSession()             { Page.ResetSession();      }
-        public void Visit(string path)         { Page.Visit(path);         }
-        public void ClickLink(string linkText) { Page.ClickLink(linkText); }
+        public void Close()                              { Page.Close();                       }
+        public void ResetSession()                       { Page.ResetSession();                }
+        public void Visit(string path)                   { Page.Visit(path);                   }
+        public void ClickLink(string linkText)           { Page.ClickLink(linkText);           }
+        public void FillIn(string field, string value)   { Page.FillIn(field, value);          }
+        public void FillInFields(object fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
     }
 }

@@ -220,14 +220,23 @@ namespace Mara.Drivers {
                 webdriver.Navigate().GoToUrl(Mara.AppHost + path);
         }
 
-        bool TryToVisitInChrome(string path) {
-            webdriver.Navigate().GoToUrl(Mara.AppHost + path);
-            try {
-                webdriver.GetWindowHandle();
-                return true;
-            } catch (NullReferenceException) {
-                return false;
-            } 
+        public void FillIn(string field, string value) {
+            var id_XPath   = "id('" + field + "')";
+            var name_XPath = "//*[@name='" + field + "']";
+
+            // TODO we NEED to test this!  like CRAZY!
+            //      try ID first, then name ...
+            var element = Find(id_XPath);
+            if (element == null)
+                element = Find(name_XPath);
+            if (element == null)
+                throw new ElementNotFoundException(id_XPath + " OR " + name_XPath);
+            else
+                element.Value = value;
+        }
+
+        public void FillInFields(object fieldsAndValues) {
+            throw new Exception("Not implemented yet ... sad!");
         }
 
         public string Body {
@@ -242,13 +251,17 @@ namespace Mara.Drivers {
             get { return webdriver.Url.Replace(Mara.Server.AppHost, ""); } // FIXME Don't use a Global Mara.Server
         }
 
+        public object ExecuteScript(string script) {
+            throw new Exception("Not implemented yet ...");
+        }
+
         public IElement Find(string xpath) {
             return Find(xpath, false);
         }
 
         public IElement Find(string xpath, bool throwExceptionIfNotFound) {
             try {
-                return new Element(webdriver.FindElement(By.XPath(xpath)), this);
+                return new Element(FindByXPath(xpath), this);
             } catch (NoSuchElementException) {
                 if (throwExceptionIfNotFound)
                     throw new ElementNotFoundException(xpath);
@@ -301,6 +314,20 @@ namespace Mara.Drivers {
                 Mara.WaitForLocalPortToBecomeAvailable(SeleniumServerPort);
                 Console.WriteLine("done");
             }
+        }
+
+        bool TryToVisitInChrome(string path) {
+            webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+            try {
+                webdriver.GetWindowHandle();
+                return true;
+            } catch (NullReferenceException) {
+                return false;
+            } 
+        }
+
+        IWebElement FindByXPath(string xpath) {
+            return webdriver.FindElement(By.XPath(xpath));
         }
     }
 }
