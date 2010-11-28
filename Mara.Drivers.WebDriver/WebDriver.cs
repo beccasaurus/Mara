@@ -8,8 +8,8 @@ using Mara;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-// using OpenQA.Selenium.IE; // <--- only on Windows ... can we get/load these dynamically?
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.IE;
 
 namespace Mara.Drivers {
 
@@ -153,11 +153,6 @@ namespace Mara.Drivers {
         }
 
         IWebDriver InstantiateWebDriver() {
-            // force to be a certain driver ... just for testing ... this will be configurable ...
-            //return new ChromeDriver();
-            //return new InternetExplorerDriver();
-            //return new FirefoxDriver();
-
             Console.WriteLine("InstantiateWebDriver()");
             Console.WriteLine("  Browser: {0}",               Browser);
             Console.WriteLine("  Remote: {0}",                Remote);
@@ -179,8 +174,8 @@ namespace Mara.Drivers {
                     return new ChromeDriver();
 				case "firefox":
 					return new FirefoxDriver();
-                //case "ie":
-                //    return new InternetExplorerDriver();
+                case "ie":
+                    return new InternetExplorerDriver();
 				default:
 					throw new Exception("Unsupported browser: " + browserName);
             }
