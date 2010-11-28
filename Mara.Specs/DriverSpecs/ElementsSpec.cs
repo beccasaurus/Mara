@@ -45,7 +45,6 @@ namespace Mara.DriverSpecs {
         [Test]
         public void CanGetTheValueOfAnElement_NullIfNotPresent() {
             ClickLink("Stuff");
-            Console.WriteLine("PAGE SOURCE (looking for DogName): {0}", Page.Body);
             Assert.That(Find("//*[@name='DogName']").Value, Is.EqualTo("Rover"));
             Assert.Null(Find("//pre").Value);
         }

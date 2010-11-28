@@ -18,8 +18,8 @@ namespace Mara.DriverSpecs {
 
         [Test]
         public void TheExampleFormShouldBeSetupLikeWeThinkItIs() {
-            // #DogName should exist and value should be empty (it does not have a NAME attribute)
-            Assert.Null(    Find("//*[@name='DogName']")  );
+            // #DogName should exist and value should be empty (it also has to have a NAME to be part of the form)
+            Assert.NotNull( Find("//*[@name='DogName']")  );
             Assert.NotNull( Find("id('DogName')")         );
             Assert.IsEmpty( Find("id('DogName')").Value   );
 
@@ -32,22 +32,47 @@ namespace Mara.DriverSpecs {
             Assert.NotNull( Find("//input[@type='submit'][@value='POST some stuff']") );
         }
 
-        [Test][Ignore("finish the setup [Test] first ...")]
-        public void FillIn_LooksForFieldWithIdOrName_BlowsUpIfNoneFound() {
-        }
-
-        [Test][Ignore("do the FillIn_ [Test] first ...")]
+        [Test]
         public void CanFillInAField_BlowsUpIfFieldNotDefined() {
-            Assert.NotNull(Find("//*[@name='DogName']"));
-            Assert.That(Find("//*[@name='DogName']").Value, Is.EqualTo("")); // empty value
+            var exceptionMessage = "Could not find element with XPath: id('IDontExist') OR //*[@name='IDontExist']";
+            this.AssertThrows<ElementNotFoundException>(exceptionMessage, () => {
+                FillIn("IDontExist", "A value I just made up");
+            });
 
-            FillIn("DogName", "Snoopy");
-            // ....
+            FillIn("DogName", "A value I just made up");
+
+            Assert.Null(Find("//dd[@data-variable='DogName']"));
+            ClickButton("POST some stuff");
+
+            // When you submit the form a <DL> is printed with info about all of the POSTed variables
+            Assert.NotNull(Find("//dd[@data-variable='DogName']"));
+            Assert.That(Find("//dd[@data-variable='DogName']").Text, Is.EqualTo("A value I just made up"));
         }
 
-        [Test][Ignore]
-        public void CanFillInMultipleFields_BlowsUpIfAnyAreNotDefined() {
+        [Test]
+        public void FillIn_LooksForFieldWithIdOrName_BlowsUpIfNoneFound() {
+            FillIn("DogName",  "Dog name has an ID");
+            FillIn("DogBreed", "Dog breed does NOT have an ID, only a Name");
+            ClickButton("POST some stuff");
 
+            Assert.That(Find("//dd[@data-variable='DogName']").Text,  Is.EqualTo("Dog name has an ID"));
+            Assert.That(Find("//dd[@data-variable='DogBreed']").Text, Is.EqualTo("Dog breed does NOT have an ID, only a Name"));
+        }
+
+        [Test]
+        public void CanFillInMultipleFields_BlowsUpIfAnyAreNotDefined() {
+            var exceptionMessage = "Could not find element with XPath: id('IDontExist') OR //*[@name='IDontExist']";
+            this.AssertThrows<ElementNotFoundException>(exceptionMessage, () => {
+                FillInFields(new { DogName = "ok", DogBreed = "ok", IDontExist = "boom!" });
+            });
+
+            Refresh(); // clear forms out and whatnot, incase the previous FillInFields() got saved TODO
+
+            FillInFields(new { DogName = "Rover", DogBreed = "Golden Retriever" });
+            ClickButton("POST some stuff");
+
+            Assert.That(Find("//dd[@data-variable='DogName']").Text,  Is.EqualTo("Rover"));
+            Assert.That(Find("//dd[@data-variable='DogBreed']").Text, Is.EqualTo("Golden Retriever"));
         }
     }
 }

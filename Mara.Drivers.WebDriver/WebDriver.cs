@@ -199,14 +199,20 @@ namespace Mara.Drivers {
 
         public void ClickLink(string linkText) {
             Find("//a[text()='" + linkText + "']", true).Click();
+            // NOTE this used to sleep for 3 seconds ... does IE need to do that?
+        }
 
-            // TESTING ... wait
-            System.Threading.Thread.Sleep(3000);
+        public void ClickButton(string buttonValue) {
+            Find("//input[@type='submit'][@value='" + buttonValue + "']", true).Click();
+            // NOTE this used to sleep for 3 seconds ... does IE need to do that?
+        }
+
+        public void Refresh() {
+            // IE - probably have to "F5" ...
+            webdriver.Navigate().Refresh();
         }
 
         public void Visit(string path) {
-            Console.WriteLine("WebDriver.Visit navigating to {0}{1}", Mara.AppHost, path);
-
             // The ChromeDriver hates life ...
             if (Browser == "chrome")
                 for (var i = 0; i < 10; i ++)
@@ -224,8 +230,7 @@ namespace Mara.Drivers {
             var id_XPath   = "id('" + field + "')";
             var name_XPath = "//*[@name='" + field + "']";
 
-            // TODO we NEED to test this!  like CRAZY!
-            //      try ID first, then name ...
+            // try ID first, then name ...
             var element = Find(id_XPath);
             if (element == null)
                 element = Find(name_XPath);
@@ -236,7 +241,8 @@ namespace Mara.Drivers {
         }
 
         public void FillInFields(object fieldsAndValues) {
-            throw new Exception("Not implemented yet ... sad!");
+            foreach (var field in fieldsAndValues.ToDictionary())
+                FillIn(field.Key, field.Value.ToString());
         }
 
         public string Body {

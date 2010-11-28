@@ -18,7 +18,7 @@
   <legend>Fill out some stuff to POST</legend>
   <form method="post">
     <label for="DogName">Dog name</label>
-    <input type="text" id="DogName" placeholder="Enter dog name here" value="<%= Request["DogName"] %>" autofocus="true" />
+    <input type="text" id="DogName" name="DogName" placeholder="Enter dog name here" value="<%= Request["DogName"] %>" autofocus="true" />
 
     <label for="DogBreed">Breed of dog</label>
     <input type="text" name="DogBreed" placeholder="eg. Golden Retriever" value="<%= Request["DogBreed"] %>" />

@@ -59,10 +59,12 @@ namespace Mara {
         public List<IElement> All(string  xpath)                                { return Page.All(xpath);                            }
         public object         ExecuteScript(string script)                      { return Page.ExecuteScript(script);                 }
 
+        public void Refresh()                            { Page.Refresh();                     }
         public void Close()                              { Page.Close();                       }
         public void ResetSession()                       { Page.ResetSession();                }
         public void Visit(string path)                   { Page.Visit(path);                   }
         public void ClickLink(string linkText)           { Page.ClickLink(linkText);           }
+        public void ClickButton(string buttonValue)      { Page.ClickButton(buttonValue);      }
         public void FillIn(string field, string value)   { Page.FillIn(field, value);          }
         public void FillInFields(object fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
     }

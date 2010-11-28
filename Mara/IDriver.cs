@@ -14,10 +14,12 @@ namespace Mara.Drivers {
         string CurrentUrl  { get; }
         string CurrentPath { get; }
 
+        void Refresh();
         void Close();
         void ResetSession();
         void Visit(string path);
         void ClickLink(string linkText);
+        void ClickButton(string buttonValue);
         void FillIn(string field, string value);
         void FillInFields(object fieldsAndValues);
 
