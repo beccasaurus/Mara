@@ -11,6 +11,9 @@ namespace Mara.Servers {
      * It could even be used to setup the application on IIS on a real server, if desired!
      */
     public interface IServer {
+
+        // TODO ? add bool Started or bool IsRunning or something?
+
         void Start();
         void Stop();
         string App     { get; set; }

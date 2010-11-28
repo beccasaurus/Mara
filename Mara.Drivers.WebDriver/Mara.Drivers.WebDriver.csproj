@@ -56,6 +56,9 @@
     <Reference Include="WebDriver.Chrome">
       <HintPath>lib\selenium-r10432\WebDriver.Chrome.dll</HintPath>
     </Reference>
+    <Reference Include="WebDriver.IE">
+      <HintPath>lib\selenium-r10432\WebDriver.IE.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WebDriver.cs" />

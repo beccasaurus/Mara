@@ -11,8 +11,12 @@ namespace Mara.Servers {
      */
     public class Cassini : Server, IServer {
         Microsoft.VisualStudio.WebHost.Server _server;
+        bool _started = false;
 
         public void Start() {
+            if (_started == true) return;
+            _started = true;
+
             _server = new Microsoft.VisualStudio.WebHost.Server(Port, "/", App);
 
             Console.Write("Cassini starting ... ");

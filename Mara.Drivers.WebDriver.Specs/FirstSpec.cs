@@ -4,10 +4,12 @@ using Mara;
 
 using System.Reflection; // print version info
 
-namespace Mara.Drivers.WebDriverSpecs {
+namespace IntegrationTests {
+
+    [SetUpFixture] public class Fixture : MaraSetUpFixture {}
 
     [TestFixture]
-    public class FirstSpec : MaraTestFixture {
+    public class FirstSpec : MaraTest {
 
         public static void PrintVersionInfo() {
             Console.WriteLine(".NET Version: " + System.Environment.Version.ToString());
@@ -20,12 +22,12 @@ namespace Mara.Drivers.WebDriverSpecs {
             }
         }
 
-        [SetUp]
-        public void Setup() {
-            Console.WriteLine("SETUP called ... calling initialize ...");
-            Initialize(); // Why doesn't the base class's SetUp get run???
-            PrintVersionInfo();
-        }
+        //[SetUp]
+        //public void Setup() {
+        //    Console.WriteLine("SETUP called ... calling initialize ...");
+        //    Initialize(); // Why doesn't the base class's SetUp get run???
+        //    PrintVersionInfo();
+        //}
 
         [Test]
         public void CanOpenAPageOrWhatever() {
@@ -40,6 +42,19 @@ namespace Mara.Drivers.WebDriverSpecs {
             Console.WriteLine("Page.Body assertions ...");
             Assert.That(Page.Body, Is.StringContaining("About this site"));
             Assert.That(Page.Body, Is.Not.StringContaining("Mara test application"));
+        }
+
+        [Test]
+        public void CanFindElementUsingXPath_ReturnsNullIfNotFound() {
+            // TODO
+        }
+
+        [Test][Ignore]
+        public void CanFindLinkByText_ReturnsNullIfNotFound() {
+        }
+
+        [Test][Ignore]
+        public void CanClickLink_BlowsUpIfNotFound() {
         }
     }
 }
