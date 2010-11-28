@@ -10,9 +10,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mara.Specs</RootNamespace>
     <AssemblyName>Mara.Specs</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +43,7 @@
       <HintPath>..\packages\NUnit.2.5.7.10213\lib\pnunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -54,6 +54,10 @@
     <ProjectReference Include="..\Mara\Mara.csproj">
       <Project>{7F5042A0-60BE-4E15-B096-49742E10D331}</Project>
       <Name>Mara</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mara.NUnit\Mara.NUnit.csproj">
+      <Project>{89116F69-5CC9-46D4-A0DA-9E8B602574B9}</Project>
+      <Name>Mara.NUnit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

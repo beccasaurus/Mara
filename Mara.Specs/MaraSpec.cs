@@ -12,26 +12,39 @@ namespace Mara.Specs {
         public string App { get; set; }
         public int Port { get; set; }
         public string Host { get; set; }
-        public string AppHost { get { return null; } }
+        public string AppHost {
+            get {
+                if (Host == null)
+                    return null;
+                else
+                    return string.Format("http://{0}:{1}", Host, Port);
+            }
+        }
     }
 
     // We'll probably break this up into more specs as it grows ...
     [TestFixture]
     public class MaraSpec {
 
-        [SetUp]
-        public void Setup() {
-            // reset defaults
+        [SetUp]    public void Setup()    { ResetDefaults(); }
+        [TearDown] public void Teardown() { ResetDefaults(); }
+
+        void ResetDefaults() {
+            Mara.Port      = 8090;
+            Mara.Host      = "localhost";
             Mara.App       = null;
             Mara.AppHost   = null;
+            Mara.Server    = null;
             Mara.RunServer = true;
+
+            Mara.DefaultDriverName = "Mara.Drivers.WebDriver";
         }
 
         [Test]
         public void Mara_App_LooksForDirectoryWithWebConfig() {
             // we *know* where our WebApp is ... let's just make sure Mara.App finds it
-            // Mara.Specs/bin/Debug/*.dll ... app is up at ../../../../WebApp/
-            var ourAppPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../../../WebApp"));
+            // ./bin/Debug/*.dll ... app is up at ../../../../WebApp/
+            var ourAppPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../../WebApp"));
 
             Assert.That(Mara.App, Is.EqualTo(ourAppPath));
         }
@@ -48,19 +61,21 @@ namespace Mara.Specs {
 
         [Test]
         public void Mara_AppHost_DefaultsToAppHostFromServer() {
-            Mara.Server = null;
+            Mara.Server = new TestServer();
             Assert.Null(Mara.AppHost);
 
             Mara.Server = new TestServer { Port = 1234, Host = "localhost" };
+            Assert.That(Mara.Server.AppHost, Is.EqualTo("http://localhost:1234"));
             Assert.That(Mara.AppHost, Is.EqualTo("http://localhost:1234"));
 
             Mara.Server = new TestServer { Port = 5678, Host = "localhost" };
+            Assert.That(Mara.Server.AppHost, Is.EqualTo("http://localhost:5678"));
             Assert.That(Mara.AppHost, Is.EqualTo("http://localhost:5678"));
         }
 
         [Test]
         public void Mara_AppHost_CanBeConfigured() {
-            Mara.Server = null;
+            Mara.Server = new TestServer();
             Assert.Null(Mara.AppHost);
 
             Mara.AppHost = "http://www.google.com";
@@ -81,7 +96,7 @@ namespace Mara.Specs {
             Assert.False(Mara.RunServer);
         }
 
-        [Test][Ignore("Pending")]
+        [Test][Ignore]
         public void Mara_RunServer_ActuallyDoesntRunIfSetToFalse() { }
     }
 }

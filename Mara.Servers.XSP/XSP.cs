@@ -27,16 +27,28 @@ namespace Mara.Servers {
             Console.Write("XSP2 starting ... ");
             try {
                 _server.Start(true);
-            } catch (SocketException) {}
+            } catch (SocketException ex) {
+                // it gets mad sometimes?
+                Console.WriteLine("SocketException while starting XSP: {0}", ex.Message);
+            }
             Mara.WaitForLocalPortToBecomeUnavailable(Port);
             Console.WriteLine("done");
         }
 
         public void Stop() {
+            if (_server == null || _started == false) return;
+
             Console.Write("XSP2 stopping ... ");
-            _server.Stop();
+            try {
+                _server.Stop();
+                Console.WriteLine("done");
+            } catch (InvalidOperationException ex) {
+                if (ex.Message == "The server is not started.")
+                    return; // this happens a lot? why ...
+                else
+                    throw ex;
+            }
             // Mara.WaitForLocalPortToBecomeAvailable(Port); // meh, just kill this process ... it doesn't like to stop ...
-            Console.WriteLine("done");
         }
     }
 }

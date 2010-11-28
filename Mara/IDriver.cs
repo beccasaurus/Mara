@@ -15,6 +15,7 @@ namespace Mara.Drivers {
         void Visit(string path);
 
         IElement Find(string xpath);
+        IElement Find(string xpath, bool throwExceptionIfNotFound);
         
         // TODO Instead of returning a simple List<IElement>, All should return something that you can chain additional finders on
         List<IElement> All(string xpath);

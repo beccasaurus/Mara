@@ -236,10 +236,17 @@ namespace Mara.Drivers {
         }
 
         public IElement Find(string xpath) {
+            return Find(xpath, false);
+        }
+
+        public IElement Find(string xpath, bool throwExceptionIfNotFound) {
             try {
                 return new Element(webdriver.FindElement(By.XPath(xpath)));
             } catch (NoSuchElementException) {
-                return null;
+                if (throwExceptionIfNotFound)
+                    throw new ElementNotFoundException(xpath);
+                else
+                    return null;
             }
         }
 

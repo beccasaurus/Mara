@@ -50,8 +50,9 @@ namespace Mara {
             }
         }
 
-        public IElement       Find(string xpath) { return Page.Find(xpath); }
-        public List<IElement> All(string xpath)  { return Page.All(xpath);  }
+        public IElement       Find(string a)         { return Page.Find(a);    }
+        public IElement       Find(string a, bool b) { return Page.Find(a, b); }
+        public List<IElement> All(string  a)         { return Page.All(a);     }
 
         public void Close()            { Page.Close();        }
         public void ResetSession()     { Page.ResetSession(); }
