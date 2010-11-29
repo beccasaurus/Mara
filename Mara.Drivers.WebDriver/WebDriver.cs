@@ -266,7 +266,12 @@ namespace Mara.Drivers {
         }
 
         public void FillInFields(object fieldsAndValues) {
-            foreach (var field in fieldsAndValues.ToDictionary())
+            FillInFields(fieldsAndValues.ToDictionary());
+        }
+
+        // TODO TEST!
+        public void FillInFields(IDictionary<string, object> fieldsAndValues) {
+            foreach (var field in fieldsAndValues)
                 FillIn(field.Key, field.Value.ToString());
         }
 
