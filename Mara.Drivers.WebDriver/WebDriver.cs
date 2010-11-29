@@ -168,14 +168,18 @@ namespace Mara.Drivers {
         }
 
         IWebDriver InstantiateLocalWebDriver(string browserName) {
-            Console.WriteLine("InstantiateLocalWebDriver({0})", browserName);
+            Console.WriteLine("InstantiateLocalWebDriver({0}) ...", browserName);
 			switch (browserName) {
 				case "chrome":
                     return new ChromeDriver();
 				case "firefox":
 					return new FirefoxDriver();
                 case "ie":
-                    return new InternetExplorerDriver();
+                    //return new InternetExplorerDriver();
+                    Console.WriteLine("launching IE ...");
+                    var ie = new InternetExplorerDriver();
+                    Console.WriteLine("launched? returning ...");
+                    return ie;
 				default:
 					throw new Exception("Unsupported browser: " + browserName);
             }
@@ -213,6 +217,7 @@ namespace Mara.Drivers {
         }
 
         public void Visit(string path) {
+            Console.WriteLine("Visit({0}) ...", path);
             // The ChromeDriver hates life ...
             if (Browser == "chrome")
                 for (var i = 0; i < 10; i ++)
@@ -224,6 +229,7 @@ namespace Mara.Drivers {
                     }   
             else
                 webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+            Console.WriteLine("(done visiting)");
         }
 
         public void FillIn(string field, string value) {

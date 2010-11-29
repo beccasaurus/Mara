@@ -3,27 +3,30 @@
   <head>
     <title>Example WebApp for Mara</title>
     <link rel="stylesheet" type="text/css" href="/public/styles.css" />
+    <!--[if IE]>
+      <%= "<link rel='stylesheet' type='text/css' href='/public/ie.css' />" %>
+    <![endif]-->
     <script type="text/javascript" href="/public/jquery.js"></script>
     <script type="text/javascript" href="/public/application.js"></script>
   </head>
   <body>
     <div id="background"></div>
-    <header>
+    <div id="header">
       <h1><a href="/">Mara</a></h1>
-      <nav>
+      <div id="nav">
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/About.aspx">About</a></li>
           <li><a href="/Form.aspx">Form</a></li>
           <li><a href="/Stuff.aspx">Stuff</a></li>
         </ul>
-      </nav>
-    </header>
+      </div>
+    </div>
     <div id="content">
       <asp:ContentPlaceHolder ID="Container" runat="server"></asp:ContentPlaceHolder>
     </div>
-    <footer>
+    <div id="footer">
       Mara is released under the MIT license.
-    </footer>
+    </div>
   </body>
 </html>

@@ -1,7 +1,3 @@
-section, header, nav, footer {
-  display: block;
-}
-
 html {
   font: 15px/1.5em Helvetica, Arial, Verdana, sans-serif;
 }
@@ -9,6 +5,7 @@ html {
 html, body {
   margin:  0;
   padding: 0;
+  background-color: black;
 }
 
 #background {
@@ -29,22 +26,22 @@ a:hover {
   text-decoration: underline;
 }
 
-header, header a {
+#header, #header a {
   color: white;
 }
-header h1 {
+#header h1 {
   position: relative;
   z-index: 1000;
   padding: 20px 0 0 20px;
 }
-header nav ul {
+#header #nav ul {
   list-style-type: none;
   position:        absolute;
   z-index:         1000;
   top:             0;
   right:           10;
 }
-header, header ul li {
+#header ul li {
   display:      inline;
   margin-right: 10px;
 }
@@ -64,7 +61,7 @@ header, header ul li {
   -moz-box-shadow:    2px 2px 15px black;
 }
 
-footer {
+#footer {
   position: relative;
   z-index: 1000;
   font-size: 11px;
