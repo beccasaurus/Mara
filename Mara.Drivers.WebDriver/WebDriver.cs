@@ -205,7 +205,8 @@ namespace Mara.Drivers {
         }
 
         public void ResetSession() {
-            throw new NotImplementedException();
+            // TODO test me!
+            webdriver.Manage().DeleteAllCookies(); // FIXME this might not be working with firefox at the moment???
         }
 
         public void Click(string linkOrButton) {
