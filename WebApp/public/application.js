@@ -8,7 +8,7 @@ function iReturnStringUsingParameterPassed(param) {
 
 function iReturnStringUsingParametersPassed() {
   var args = [];
-  for (var i in arguments) args[args.length] = arguments[i];
+  for (var i = 0; i < arguments.length; i++) args[args.length] = arguments[i];
   return 'you passed: ' + args.join(', ');
 }
 
