@@ -18,6 +18,7 @@ namespace Mara.Drivers {
         void Close();
         void ResetSession();
         void Visit(string path);
+        void Click(string linkOrButton);
         void ClickLink(string linkText);
         void ClickButton(string buttonValue);
         void FillIn(string field, string value);

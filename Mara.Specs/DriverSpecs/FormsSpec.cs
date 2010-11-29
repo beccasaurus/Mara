@@ -10,6 +10,7 @@ namespace Mara.DriverSpecs {
      *   FillIn("...", "...")
      *   FillInFields("...", "...")
      *   ClickButton("...")
+     *   Click("...")
      */
     [TestFixture]
     public class FormsSpec : MaraTest {
@@ -73,6 +74,25 @@ namespace Mara.DriverSpecs {
 
             Assert.That(Find("//dd[@data-variable='DogName']").Text,  Is.EqualTo("Rover"));
             Assert.That(Find("//dd[@data-variable='DogBreed']").Text, Is.EqualTo("Golden Retriever"));
+        }
+
+        [Test]
+        public void ClickClicksLinkOrButton_BlowsUpIfNotFound() {
+            var exceptionMessage = "Could not find element with XPath: //a[text()='Nothing has this text'] OR //input[@type='submit'][@value='Nothing has this text']";
+            this.AssertThrows<ElementNotFoundException>(exceptionMessage, () => {
+                Click("Nothing has this text");
+            });
+            
+            Click("Home");
+            Assert.That(CurrentPath, Is.EqualTo("/"));
+
+            Click("Form");
+            Assert.That(CurrentPath, Is.EqualTo("/Form.aspx"));
+
+            Assert.False(Page.HasContent("Snoopy"));
+            FillInFields(new { DogName = "Snoopy" });
+            Click("POST some stuff");
+            Assert.True(Page.HasContent("Snoopy"));
         }
     }
 }

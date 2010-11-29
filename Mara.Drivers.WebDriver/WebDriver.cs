@@ -203,14 +203,26 @@ namespace Mara.Drivers {
             throw new NotImplementedException();
         }
 
+        public void Click(string linkOrButton) {
+            var link_XPath   = "//a[text()='" + linkOrButton + "']";
+            var button_XPath = "//input[@type='submit'][@value='" + linkOrButton + "']";
+
+            // try link first, then button ...
+            var element = Find(link_XPath);
+            if (element == null)
+                element = Find(button_XPath);
+            if (element == null)
+                throw new ElementNotFoundException(link_XPath + " OR " + button_XPath);
+            else
+                element.Click();
+        }
+
         public void ClickLink(string linkText) {
             Find("//a[text()='" + linkText + "']", true).Click();
-            // NOTE this used to sleep for 3 seconds ... does IE need to do that?
         }
 
         public void ClickButton(string buttonValue) {
             Find("//input[@type='submit'][@value='" + buttonValue + "']", true).Click();
-            // NOTE this used to sleep for 3 seconds ... does IE need to do that?
         }
 
         public void Refresh() {

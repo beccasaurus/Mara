@@ -60,6 +60,7 @@ namespace Mara {
         public void Close()                              { Page.Close();                       }
         public void ResetSession()                       { Page.ResetSession();                }
         public void Visit(string path)                   { Page.Visit(path);                   }
+        public void Click(string linkOrButton)           { Page.Click(linkOrButton);           }
         public void ClickLink(string linkText)           { Page.ClickLink(linkText);           }
         public void ClickButton(string buttonValue)      { Page.ClickButton(buttonValue);      }
         public void FillIn(string field, string value)   { Page.FillIn(field, value);          }
