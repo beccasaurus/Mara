@@ -91,5 +91,21 @@ namespace Mara.DriverSpecs {
             ClickLink("Stuff");
             Assert.That(CurrentPath, Is.EqualTo("/Stuff.aspx"));
         }
+
+        [Test]
+        public void CanCheckIfPageHasContent() {
+            Assert.True(  Page.HasContent("If you see this text, you're running our test suite!"));
+            Assert.True(  Page.HasContent("Mara test application"));
+            Assert.False( Page.HasContent("This text does not show up on the page"));
+            Assert.False( Page.HasContent("Nor does this text"));
+        }
+
+        [Test]
+        public void CanCheckIfPageHasXPath() {
+            Assert.True(  Page.HasXPath("//h1"));
+            Assert.True(  Page.HasXPath("//h2"));
+            Assert.False( Page.HasXPath("//h3"));
+            Assert.False( Page.HasXPath("//h4"));
+        }
     }
 }

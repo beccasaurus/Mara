@@ -53,6 +53,8 @@ namespace Mara {
         public List<IElement> All(string  xpath)                                { return Page.All(xpath);                            }
         public object         ExecuteScript(string script)                      { return Page.ExecuteScript(script);                 }
         public string         SaveAndOpenPage()                                 { return Page.SaveAndOpenPage();                     }
+        public bool           HasXPath(string xpath)                            { return Page.HasXPath(xpath);                       }
+        public bool           HasContent(string text)                           { return Page.HasContent(text);                      }
 
         public void Refresh()                            { Page.Refresh();                     }
         public void Close()                              { Page.Close();                       }

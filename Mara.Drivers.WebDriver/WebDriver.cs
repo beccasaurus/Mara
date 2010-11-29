@@ -299,6 +299,14 @@ namespace Mara.Drivers {
 
             return fileName;
         }
+        
+        public bool HasXPath(string xpath) {
+            return (Find(xpath) != null);
+        }
+        
+        public bool HasContent(string text) {
+            return Body.Contains(text);
+        }
 
         // private methods
 

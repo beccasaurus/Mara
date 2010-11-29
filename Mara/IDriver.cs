@@ -25,12 +25,15 @@ namespace Mara.Drivers {
 
         IElement Find(string xpath);
         IElement Find(string xpath, bool throwExceptionIfNotFound);
-        
+
         // TODO Instead of returning a simple List<IElement>, All should return something that you can chain additional finders on
         List<IElement> All(string xpath);
 
         object ExecuteScript(string script);
 
         string SaveAndOpenPage();
+
+        bool HasXPath(string xpath);
+        bool HasContent(string text);
     }
 }
