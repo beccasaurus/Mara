@@ -10,9 +10,10 @@ namespace Mara.Drivers {
      */
     public interface IDriver {
 
-        string Body        { get; }
-        string CurrentUrl  { get; }
-        string CurrentPath { get; }
+        string Body                { get; }
+        string CurrentUrl          { get; }
+        string CurrentPath         { get; }
+        bool   JavaScriptSupported { get; }
 
         void Refresh();
         void Close();
@@ -30,7 +31,8 @@ namespace Mara.Drivers {
         // TODO Instead of returning a simple List<IElement>, All should return something that you can chain additional finders on
         List<IElement> All(string xpath);
 
-        object ExecuteScript(string script);
+        void   ExecuteScript(string script);
+        object EvaluateScript(string script);
 
         string SaveAndOpenPage();
 

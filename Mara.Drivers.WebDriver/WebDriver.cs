@@ -16,7 +16,7 @@ namespace Mara.Drivers {
     /*
      * Mara IDriver implementation for Selenium WebDriver
      *
-     * TODO this is getting BIG!  Split into multiple organized files!
+     * TODO this is getting BIG!  Split into multiple organized files!  IDriver implementation should be in its own file (if not multiple)
      */
     public partial class WebDriver : IDriver {
 
@@ -191,6 +191,11 @@ namespace Mara.Drivers {
             Mara.Log("InstantiateRemoteWebDriver({0}, {1})", browserName, remote);
 		    var capabilities = new DesiredCapabilities(browserName, string.Empty, new Platform(PlatformType.Any));
 		    var remoteUri    = new Uri(remote); // TODO add /wd/hub here so it doesn't have to be used everyplace else
+
+            // Note: we might want to make it easy to get access to an HtmlUnit driver that does *NOT* execute 
+            //       JavaScrpt *AND* one that *DOES* execute JavaScript for performance ... way faster tests?
+            capabilities.IsJavaScriptEnabled = true; // Run with JavaScript support, please!  (Needed for HtmlUnit)
+
 		    return new RemoteWebDriver(remoteUri, capabilities);
         }
 
@@ -276,8 +281,14 @@ namespace Mara.Drivers {
             get { return webdriver.Url.Replace(Mara.Server.AppHost, ""); } // FIXME Don't use a Global Mara.Server
         }
 
-        public object ExecuteScript(string script) {
-            throw new Exception("Not implemented yet ...");
+        public bool JavaScriptSupported { get { return true; }}
+
+        public void ExecuteScript(string script) {
+            EvaluateScript(script);
+        }
+
+        public object EvaluateScript(string script) {
+            return (webdriver as IJavaScriptExecutor).ExecuteScript(script);
         }
 
         public IElement Find(string xpath) {

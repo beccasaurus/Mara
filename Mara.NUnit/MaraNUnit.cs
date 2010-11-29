@@ -44,14 +44,15 @@ namespace Mara {
 
         // Everything below here can be copy/pasted from Mara/MaraInstance.cs
 
-        public string Body        { get { return Page.Body;        }}
-        public string CurrentUrl  { get { return Page.CurrentUrl;  }}
-        public string CurrentPath { get { return Page.CurrentPath; }}
+        public string Body              { get { return Page.Body;                }}
+        public string CurrentUrl        { get { return Page.CurrentUrl;          }}
+        public string CurrentPath       { get { return Page.CurrentPath;         }}
+        public bool JavaScriptSupported { get { return Page.JavaScriptSupported; }}
 
         public IElement       Find(string xpath)                                { return Page.Find(xpath);                           }
         public IElement       Find(string xpath, bool throwExceptionIfNotFound) { return Page.Find(xpath, throwExceptionIfNotFound); }
         public List<IElement> All(string  xpath)                                { return Page.All(xpath);                            }
-        public object         ExecuteScript(string script)                      { return Page.ExecuteScript(script);                 }
+        public object         EvaluateScript(string script)                     { return Page.EvaluateScript(script);                }
         public string         SaveAndOpenPage()                                 { return Page.SaveAndOpenPage();                     }
         public bool           HasXPath(string xpath)                            { return Page.HasXPath(xpath);                       }
         public bool           HasContent(string text)                           { return Page.HasContent(text);                      }
@@ -65,5 +66,6 @@ namespace Mara {
         public void ClickButton(string buttonValue)      { Page.ClickButton(buttonValue);      }
         public void FillIn(string field, string value)   { Page.FillIn(field, value);          }
         public void FillInFields(object fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
+        public void ExecuteScript(string script)         { Page.ExecuteScript(script);         }
     }
 }
