@@ -20,6 +20,8 @@ Install
 
 We will make Mara available as a [NuGet][] package.  For now, you can clone the solution and build it yourself if you *really* want to try it out.
 
+Mara currently works in [Mono][] (2.8 required for HtmlUnit with WebDriver) and MS .NET 3.5.  Keeping Mara working in [Mono][] is and will always be a *high* priority!
+
 Selenium 2.0 (WebDriver)
 ------------------------
 
@@ -272,3 +274,4 @@ Mara is released under the MIT license.
 [wikipedia]: http://en.wikipedia.org/wiki/Mara_(mammal)
 [webdriver]: http://code.google.com/p/selenium/
 [watin]:     http://watin.sourceforge.net/
+[mono]:      http://www.mono-project.com/
