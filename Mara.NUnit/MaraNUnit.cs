@@ -52,6 +52,7 @@ namespace Mara {
         public IElement       Find(string xpath, bool throwExceptionIfNotFound) { return Page.Find(xpath, throwExceptionIfNotFound); }
         public List<IElement> All(string  xpath)                                { return Page.All(xpath);                            }
         public object         ExecuteScript(string script)                      { return Page.ExecuteScript(script);                 }
+        public string         SaveAndOpenPage()                                 { return Page.SaveAndOpenPage();                     }
 
         public void Refresh()                            { Page.Refresh();                     }
         public void Close()                              { Page.Close();                       }

@@ -15,6 +15,8 @@ namespace Mara.Drivers {
 
     /*
      * Mara IDriver implementation for Selenium WebDriver
+     *
+     * TODO this is getting BIG!  Split into multiple organized files!
      */
     public partial class WebDriver : IDriver {
 
@@ -285,6 +287,19 @@ namespace Mara.Drivers {
             return Element.List(webdriver.FindElements(By.XPath(xpath)), this);
         }
 
+        public string SaveAndOpenPage() {
+            var fileName = Path.Combine(Path.GetTempPath(), "Mara_" + DateTime.Now.ToString("yyyy-MM-dd_HHmmssffff") + ".html");
+
+            using (var writer = new StreamWriter(fileName))
+                writer.WriteLine(Body);
+
+            // TODO document and test SAVE_AND_OPEN_PAGE=false
+            if (Environment.GetEnvironmentVariable("SAVE_AND_OPEN_PAGE") == null)
+                System.Diagnostics.Process.Start(fileName); // open HTML file in user's default browser
+
+            return fileName;
+        }
+
         // private methods
 
         bool PageHasLoaded {
@@ -309,6 +324,8 @@ namespace Mara.Drivers {
             _seleniumStandalone.StartInfo.Arguments              = string.Format("-jar {0} -port {1}", Path.GetFullPath(SeleniumServerJar), SeleniumServerPort);
             _seleniumStandalone.StartInfo.UseShellExecute        = false;
             _seleniumStandalone.StartInfo.CreateNoWindow         = true;
+
+            // TODO document and test SELENIUM_LOG variable
             if (Environment.GetEnvironmentVariable("SELENIUM_LOG") == null) // if there's no SELENIUM_LOG variable, don't print STDOUT
                 _seleniumStandalone.StartInfo.RedirectStandardOutput = true;
 

@@ -83,6 +83,7 @@ namespace Mara {
         }
 
         public static void Log(string message, params object[] args) {
+            // TODO document and test MARA_LOG variable
             if (Environment.GetEnvironmentVariable("MARA_LOG") != null)
                 Console.WriteLine(message, args);
         }

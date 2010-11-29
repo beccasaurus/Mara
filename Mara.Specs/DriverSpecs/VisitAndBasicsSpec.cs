@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using NUnit.Framework;
 using Mara;
 
@@ -11,6 +12,7 @@ namespace Mara.DriverSpecs {
      *   Page.Body
      *   CurrentUrl
      *   CurrentPath
+     *   SaveAndOpenPage()
      */
     [TestFixture]
     public class VisitAndBasicsSpec : MaraTest {
@@ -51,5 +53,17 @@ namespace Mara.DriverSpecs {
         // We could use NUnit categories to specify this?
         [Test][Ignore]
         public void CanGetCurrentPathAfterBeingRedirectedViaJavaScript() { }
+
+        [Test]
+        public void CanSaveAndOpenPage() {
+            Visit("/");
+            Assert.True(Page.Body.Contains("If you see this text, you're running our test suite!"));
+
+            // SaveAndOpenPage() returns the full path to the saved .html file
+            var html = "";
+            using (var reader = new StreamReader(SaveAndOpenPage()))
+                html = reader.ReadToEnd();
+            Assert.True(html.Contains("If you see this text, you're running our test suite!"));
+        }
     }
 }

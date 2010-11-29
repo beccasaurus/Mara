@@ -30,5 +30,7 @@ namespace Mara.Drivers {
         List<IElement> All(string xpath);
 
         object ExecuteScript(string script);
+
+        string SaveAndOpenPage();
     }
 }
