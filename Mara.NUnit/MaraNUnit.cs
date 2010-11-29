@@ -20,7 +20,7 @@ namespace Mara {
 
         [SetUp]
         public void MaraSetUp() {
-            Console.WriteLine("Global MaraSetUpFixture.SetUp");
+            Mara.Log("Global MaraSetUpFixture.SetUp");
             if (MaraInstance == null) {
                 MaraInstance = new Mara();
                 MaraInstance.Initialize();
@@ -29,7 +29,7 @@ namespace Mara {
 
         [TearDown]
         public void MaraTearDown() {
-            Console.WriteLine("Global MaraSetUpFixture.TearDown");
+            Mara.Log("Global MaraSetUpFixture.TearDown");
             MaraInstance.Shutdown();
         }
     }

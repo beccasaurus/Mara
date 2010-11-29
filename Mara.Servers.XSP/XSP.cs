@@ -14,34 +14,34 @@ namespace Mara.Servers {
         ApplicationServer _server;
         bool _started = false;
 
-        public XSP() { Console.WriteLine("Constructed a new XSP server"); }
+        public XSP() { Mara.Log("Constructed a new XSP server"); }
 
         public void Start() {
             if (_started == true) return;
             _started = true;
 
-            Console.WriteLine("XSP.Start()");
+            Mara.Log("XSP.Start()");
             _server = new ApplicationServer(new XSPWebSource(IPAddress.Any, Port));
 			_server.AddApplicationsFromCommandLine(string.Format("{0}:/:{1}", Port, App));
 
-            Console.Write("XSP2 starting ... ");
+            Mara.Log("XSP2 starting ... ");
             try {
                 _server.Start(true);
             } catch (SocketException ex) {
                 // it gets mad sometimes?
-                Console.WriteLine("SocketException while starting XSP: {0}", ex.Message);
+                Mara.Log("SocketException while starting XSP: {0}", ex.Message);
             }
             Mara.WaitForLocalPortToBecomeUnavailable(Port);
-            Console.WriteLine("done");
+            Mara.Log("done");
         }
 
         public void Stop() {
             if (_server == null || _started == false) return;
 
-            Console.Write("XSP2 stopping ... ");
+            Mara.Log("XSP2 stopping ... ");
             try {
                 _server.Stop();
-                Console.WriteLine("done");
+                Mara.Log("done");
             } catch (InvalidOperationException ex) {
                 if (ex.Message == "The server is not started.")
                     return; // this happens a lot? why ...

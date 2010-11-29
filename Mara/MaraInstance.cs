@@ -24,16 +24,16 @@ namespace Mara {
 
         // This can be used in the [SetUp] part of your testing framework to setup Mara
         public void Initialize() {
-            Console.WriteLine("Mara.Initialize()");
+            Mara.Log("Mara.Initialize()");
             Mara.Server.Start();
         }
 
         // This can be used in the [TearDown] part of your testing framework to teardown Mara
         public void Shutdown() {
-            Console.WriteLine("Mara.Shutdown()");
-            Console.WriteLine("  Server.Stop ...");
+            Mara.Log("Mara.Shutdown()");
+            Mara.Log("  Server.Stop ...");
             Mara.Server.Stop(); // <--- oh noes!  Mara.Server is GLOBAL?  icky.  hmm ... Server/Driver need to be in instances ... TODO FIXME
-            Console.WriteLine("  Close() driver ...");
+            Mara.Log("  Close() driver ...");
             Close();
         }
 

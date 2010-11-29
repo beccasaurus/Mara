@@ -82,6 +82,11 @@ namespace Mara {
             }
         }
 
+        public static void Log(string message, params object[] args) {
+            if (Environment.GetEnvironmentVariable("MARA_LOG") != null)
+                Console.WriteLine(message, args);
+        }
+
         // Private Helper Methods
 
         static string TryToFindWebAppDirectory() {
@@ -121,7 +126,7 @@ namespace Mara {
         }
 
         static IDriver InstantiateDefaultDriver() {
-            Console.WriteLine("InstantiateDefaultDriver");
+            Mara.Log("InstantiateDefaultDriver");
             Type driverType = GetTypeFromWhereverWeCan(Mara.DefaultDriverName);
             if (driverType != null)
                 return Activator.CreateInstance(driverType) as IDriver;
@@ -132,7 +137,7 @@ namespace Mara {
         }
 
         static IServer InstantiateDefaultServer() {
-            Console.WriteLine("InstantiateDefaultServer");
+            Mara.Log("InstantiateDefaultServer");
             Type serverType = GetTypeFromWhereverWeCan(Mara.DefaultServerName);
             if (serverType != null)
                 return Activator.CreateInstance(serverType) as IServer;
