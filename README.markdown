@@ -1,6 +1,8 @@
 Mara
 ====
 
+[![Image of a Mara][thumbnail]][wikipedia]
+
 Description
 -----------
 
@@ -230,5 +232,7 @@ License
 
 Mara is released under the MIT license.
 
-[capybara]: https://github.com/jnicklas/capybara
-[nuget]:    http://nuget.codeplex.com/
+[capybara]:  https://github.com/jnicklas/capybara
+[nuget]:     http://nuget.codeplex.com/
+[thumbnail]: http://upload.wikimedia.org/wikipedia/en/thumb/9/91/Cavy1.jpg/90px-Cavy1.jpg
+[wikipedia]: http://en.wikipedia.org/wiki/Mara_(mammal)
