@@ -20,6 +20,40 @@ Install
 
 We will make Mara available as a [NuGet][] package.  For now, you can clone the solution and build it yourself if you *really* want to try it out.
 
+Selenium 2.0 (WebDriver)
+------------------------
+
+[Selenium WebDriver][webdriver] is currently the only built in driver.  We plan on adding [WatiN][] support in the near future.
+
+I'll add more documentation on how to configure webdriver later ... for now, the most important thing to know is that there are 
+some very useful environment variables that can be used, mainly `BROWSER`
+
+Let's say that you create an NUnit test (as demonstrated below).
+
+    # this will run your tests in WebDriver.DefaultBrowser (Firefox)
+    nunit-console MyTests.dll
+
+    # this will run your tests in Internet Explorer
+    BROWSER=IE        nunit-console MyTests.dll      # BASH
+    SET BROWSER=IE && nunit-console MyTests.dll      # BATCH
+
+`BROWSER` can currently be set to Firefox, Chrome, IE, or HtmlUnit.  If HtmlUnit is selected, you should put a copy of 
+`selenium-server-standalone.jar` (which can be found in the download section of the [Selenium][webdriver] site) in the 
+current directory.  It will automatically be launched.
+
+**NOTE**: HtmlUnit is a Java library so you'll need to have Java installed on your machine if you want to use it.  Java is 
+not required to test in the other browsers, just HtmlUnit.
+
+Let's say you have a server that you want to use to run your tests on.  Maybe it has Java installed so you want to run 
+your HtmlUnit tests on the remote server and just test with IE locally.
+
+    # this will connect to a remote server running selenium-server-standalone and run your tests on that server 
+    # using HtmlUnit
+    REMOTE=http://remote-server:4444/wd/hub BROWSER=HtmlUnit nunit-console MyTests.dll
+
+**NOTE**: the remote stuff isn't fully fleshed out in Mara.  It works great with Selenium, in general, but we'll be sure to make it 
+*really* easy for you to do stuff like this ... just give us some time  :)
+
 Hello World (the easy way)
 --------------------------
 
@@ -236,3 +270,5 @@ Mara is released under the MIT license.
 [nuget]:     http://nuget.codeplex.com/
 [thumbnail]: http://upload.wikimedia.org/wikipedia/en/thumb/9/91/Cavy1.jpg/90px-Cavy1.jpg
 [wikipedia]: http://en.wikipedia.org/wiki/Mara_(mammal)
+[webdriver]: http://code.google.com/p/selenium/
+[watin]:     http://watin.sourceforge.net/
