@@ -194,7 +194,8 @@ namespace Mara.Drivers {
 
             // Note: we might want to make it easy to get access to an HtmlUnit driver that does *NOT* execute 
             //       JavaScrpt *AND* one that *DOES* execute JavaScript for performance ... way faster tests?
-            capabilities.IsJavaScriptEnabled = true; // Run with JavaScript support, please!  (Needed for HtmlUnit)
+            if (Environment.GetEnvironmentVariable("NO_JAVASCRIPT") == null)
+                capabilities.IsJavaScriptEnabled = true; // Run with JavaScript support, please!  (Needed for HtmlUnit)
 
 		    return new RemoteWebDriver(remoteUri, capabilities);
         }
@@ -285,7 +286,7 @@ namespace Mara.Drivers {
         }
 
         public string CurrentPath {
-            get { return webdriver.Url.Replace(Mara.Server.AppHost, ""); } // FIXME Don't use a Global Mara.Server
+            get { return webdriver.Url.Replace(Mara.AppHost, ""); } // FIXME Don't use a Global Mara.Server
         }
 
         public bool JavaScriptSupported { get { return true; }}
