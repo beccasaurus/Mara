@@ -54,9 +54,7 @@ namespace Mara {
             }
         }
 
-        // public static bool RunServer = true;
-        // TODO test!
-        static bool _runServer = false;
+        static bool _runServer = true;
         public static bool RunServer {
             get {
                 if (Environment.GetEnvironmentVariable("RUN_SERVER") != null)
