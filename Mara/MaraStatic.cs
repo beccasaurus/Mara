@@ -18,8 +18,8 @@ namespace Mara {
 
         static string _defaultDriverName = null;
         public static string DefaultDriverName {
-            get { return _defaultServerName ?? Environment.GetEnvironmentVariable("DRIVER_NAME") ?? "Mara.Drivers.WebDriver"; }
-            set { _defaultServerName = value; }
+            get { return _defaultDriverName ?? Environment.GetEnvironmentVariable("DRIVER_NAME") ?? "Mara.Drivers.WebClient"; }
+            set { _defaultDriverName = value; }
         }
 
         static string _defaultServerName;
