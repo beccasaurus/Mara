@@ -16,7 +16,11 @@ namespace Mara {
         public static int    Port = 8090;
         public static string Host = "localhost";
 
-        public static string DefaultDriverName = "Mara.Drivers.WebDriver";
+        static string _defaultDriverName = null;
+        public static string DefaultDriverName {
+            get { return _defaultServerName ?? Environment.GetEnvironmentVariable("DRIVER_NAME") ?? "Mara.Drivers.WebDriver"; }
+            set { _defaultServerName = value; }
+        }
 
         static string _defaultServerName;
         public static string DefaultServerName {
@@ -50,7 +54,18 @@ namespace Mara {
             }
         }
 
-        public static bool RunServer = true;
+        // public static bool RunServer = true;
+        // TODO test!
+        static bool _runServer = false;
+        public static bool RunServer {
+            get {
+                if (Environment.GetEnvironmentVariable("RUN_SERVER") != null)
+                    return bool.Parse(Environment.GetEnvironmentVariable("RUN_SERVER"));
+                else
+                    return _runServer;
+            }
+            set { _runServer = value; }
+        }
 
         public static IServer Server {
             get {
@@ -65,6 +80,9 @@ namespace Mara {
 
         public static string AppHost {
             get {
+                // TODO test ...
+                if (Environment.GetEnvironmentVariable("APP_HOST") != null)
+                    return Environment.GetEnvironmentVariable("APP_HOST");
                 if (_appHost != null) return _appHost;
                 else                  return (Server == null) ? null : Server.AppHost;
             }

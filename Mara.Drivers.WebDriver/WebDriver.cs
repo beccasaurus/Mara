@@ -236,6 +236,7 @@ namespace Mara.Drivers {
             webdriver.Navigate().Refresh();
         }
 
+        // TODO I don't like using Mara.AppHost ... ?  using something static feels icky?  maybe?
         public void Visit(string path) {
             Mara.Log("Visit({0})", path);
             // The ChromeDriver hates life ...
@@ -316,6 +317,7 @@ namespace Mara.Drivers {
             return Element.List(webdriver.FindElements(By.XPath(xpath)), this);
         }
 
+        // TODO Move this into some common code?  a Driver baseclass with some common functionality?  or ... SOMETHING?
         public string SaveAndOpenPage() {
             var fileName = Path.Combine(Path.GetTempPath(), "Mara_" + DateTime.Now.ToString("yyyy-MM-dd_HHmmssffff") + ".html");
 
