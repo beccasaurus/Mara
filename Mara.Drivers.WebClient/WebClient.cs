@@ -45,15 +45,16 @@ namespace Mara.Drivers {
 
         public void ResetSession() {
             _client = new CookieAwareWebClient();
-            _client.BaseAddress = AppHost;
         }
 
         public string Body { get; set; }
 
         public void Visit(string path) {
-            Body = Client.DownloadString(path);
-            Doc  = null;
-            _currentPath = path;
+			var url = (path.StartsWith("/")) ? (Mara.AppHost + path) : path;
+
+            Body        = Client.DownloadString(url);
+            Doc         = null;
+            _currentUrl = url;
         }
 
         // also initialize forms here
@@ -71,13 +72,13 @@ namespace Mara.Drivers {
             set { _doc = value; }
         }
 
-        internal string _currentPath;
         public string CurrentPath {
-            get { return _currentPath; } 
+            get { return new Uri(CurrentUrl).LocalPath; } 
         }
 
+		internal string _currentUrl;
         public string CurrentUrl {
-            get { return AppHost + CurrentPath; }
+            get { return _currentUrl; }
         }
 
         // TODO Move this into some common code?  a Driver baseclass with some common functionality?  or ... SOMETHING?
@@ -232,12 +233,13 @@ namespace Mara.Drivers {
             void SubmitForm() {
                 if (ParentForm == null)
                     throw new Exception("Cannot click button that is not in a form: " + this.ToString());
-                
+
+                var host   = Driver.CurrentUrl.Replace(new Uri(Driver.CurrentUrl).PathAndQuery, ""); // http://localhost:1234
                 var action = (ParentForm.Attributes.Contains("action")) ? ParentForm.Attributes["action"].Value : Driver.CurrentUrl;
                 if (action.StartsWith("/"))
-                    action = Driver.AppHost + action;
+                    action = host + action;
                 else if (! action.StartsWith("http"))
-                    action = Driver.AppHost + "/" + action;
+                    action = host + "/" + action;
 
                 var formFields = new NameValueCollection();
                 foreach (var node in ParentForm.DescendantNodes()) {
@@ -250,10 +252,10 @@ namespace Mara.Drivers {
                 }
 
                 // Make the actual request.  We also update some variables on the Driver, like Visit() normally does
-                byte[] response     = Driver.Client.UploadValues(action, "POST", formFields);
-                Driver.Body         = Encoding.UTF8.GetString(response);
-                Driver.Doc          = null;
-                Driver._currentPath = action.Replace(Driver.AppHost, "");
+                byte[] response    = Driver.Client.UploadValues(action, "POST", formFields);
+                Driver.Body        = Encoding.UTF8.GetString(response);
+                Driver.Doc         = null;
+                Driver._currentUrl = action;
             }
 
             string _value;
