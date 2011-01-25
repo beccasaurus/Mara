@@ -277,6 +277,18 @@ namespace Mara.Drivers {
                 FillIn(field.Key, field.Value.ToString());
         }
 
+		public void Check(string checkbox) {
+			throw new NotImplementedException("WebDriver Check() not implemented yet");
+		}
+
+		public void Uncheck(string checkbox) {
+			throw new NotImplementedException("WebDriver Uncheck() not implemented yet");
+		}
+
+		public void Select(string dropdown, string option) {
+			throw new NotImplementedException("WebDriver Select() not implemented yet");
+		}
+
         public string Body {
             get { return webdriver.PageSource; }
         }

@@ -21,6 +21,46 @@ namespace Mara.Drivers {
      */
     public partial class WebClient : IDriver {
 
+		public class SelectOption {
+			public string   Value      { get; set; }
+			public bool     IsSelected { get; set; }
+			public string   Text       { get; set; }
+			public HtmlNode Node       { get; set; }
+
+			public string FormValue {
+				get { return (Value != null) ? Value.Trim() : Text.Trim(); }
+			}
+
+			public SelectOption() {
+				IsSelected = false;
+			}
+
+			public static List<SelectOption> GetOptionsFromSelectNode(HtmlNode selectNode) {
+				var options = new List<SelectOption>();
+
+				// to get options and their values, we have to go through all of this <select>'s child nodes.
+				// <option> text shows up in text nodes following <option> nodes.
+				// we build up a list of SelectOptions that we can use to determine the value;
+				foreach (var childNode in selectNode.ChildNodes) {
+					// add <option> to list
+					if (childNode.Name == "option") {
+						var option        = new SelectOption();
+						option.IsSelected = (childNode.Attributes.Contains("selected") && childNode.Attributes["selected"].Value != "false");
+						option.Node       = childNode;
+						if (childNode.Attributes.Contains("value") && childNode.Attributes["value"].Value.Trim().Length > 0)
+							option.Value = childNode.Attributes["value"].Value;
+						options.Add(option);
+
+						// add this text to the last <option> in the list
+					} else if (childNode.NodeType == HtmlNodeType.Text && options.Count > 0) {
+						options[options.Count - 1].Text += childNode.InnerText;
+					}
+				}
+
+				return options;
+			}
+		}
+
         // Little WebClient wrapper that tracks cookies for subsequent requests
         public class CookieAwareWebClient : System.Net.WebClient {
             CookieContainer cookies = new CookieContainer();
@@ -193,9 +233,68 @@ namespace Mara.Drivers {
                 FillIn(field.Key, field.Value.ToString());
         }
 
+		public void Check(string checkbox) {
+            var id_XPath   = "//input[@type='checkbox'][@id='" + checkbox + "']";
+            var name_XPath = "//input[@type='checkbox'][@name='" + checkbox + "']";
+
+            // try ID first, then name ...
+            var element = Find(id_XPath);
+            if (element == null)
+                element = Find(name_XPath);
+            if (element == null)
+                throw new ElementNotFoundException(id_XPath + " OR " + name_XPath);
+            else
+                element.Value = "on";
+		}
+
+		public void Uncheck(string checkbox) {
+            var id_XPath   = "//input[@type='checkbox'][@id='" + checkbox + "']";
+            var name_XPath = "//input[@type='checkbox'][@name='" + checkbox + "']";
+
+            // try ID first, then name ...
+            var element = Find(id_XPath);
+            if (element == null)
+                element = Find(name_XPath);
+            if (element == null)
+                throw new ElementNotFoundException(id_XPath + " OR " + name_XPath);
+            else
+                element.Value = null;
+		}
+
+		public void Select(string dropdown, string option) {
+            var id_XPath   = "//select[@id='" + dropdown + "']";
+            var name_XPath = "//select[@name='" + dropdown + "']";
+
+            // try ID first, then name ...
+            var element = Find(id_XPath);
+            if (element == null)
+                element = Find(name_XPath);
+            if (element == null)
+                throw new ElementNotFoundException(id_XPath + " OR " + name_XPath);
+
+			Element nativeElement = element as WebClient.Element;
+			var options = SelectOption.GetOptionsFromSelectNode(nativeElement.Node);
+
+			// find an option with the matching text OR value for this select
+			var matchingOption = options.FirstOrDefault(o => {
+				var text  = (o.Text  == null) ? "" : o.Text.Trim();		
+				var value = (o.Value == null) ? "" : o.Value.Trim();		
+				return (text == option.Trim() || value == option.Trim());
+			});
+
+			// update the <option> node to have selected="selected" or, if not found, throw ElementNotFoundException
+			if (matchingOption != null) {
+				if (matchingOption.Node.Attributes.Contains("selected"))
+					matchingOption.Node.Attributes["selected"].Value = "seleted";
+				else
+					matchingOption.Node.Attributes.Append("selected", "selected");
+			} else
+                throw new ElementNotFoundException("<option> with Text or Value: " + option);
+		}
+
         public class Element : IElement {
-            WebClient Driver { get; set; }
-            HtmlNode  Node   { get; set; }
+            public WebClient Driver { get; set; }
+            public HtmlNode  Node   { get; set; }
 
             internal Element(HtmlNode node, WebClient driver) {
                 Driver = driver;
@@ -243,13 +342,56 @@ namespace Mara.Drivers {
 
                 var formFields = new NameValueCollection();
                 foreach (var node in ParentForm.DescendantNodes()) {
+					string id    = node.Attributes.Contains("id")    ? node.Attributes["id"].Value.Trim()    : null;
+					string name  = node.Attributes.Contains("name")  ? node.Attributes["name"].Value.Trim()  : null;
+					string type  = node.Attributes.Contains("type")  ? node.Attributes["type"].Value.Trim()  : null;
+					string value = node.Attributes.Contains("value") ? node.Attributes["value"].Value.Trim() : "";
+
+					// can't add a form field without a name
+					if (name == null || name.Trim().Length == 0)
+						continue;
+
                     switch (node.Name.ToLower()) {
+
                         case "input":
-                            if (node.Attributes.Contains("name") && node.Attributes.Contains("value"))
-                                formFields[node.Attributes["name"].Value] = node.Attributes["value"].Value;
+							// if a checkbox's value is blank, we don't POST it
+							if (type == "checkbox") {
+								if (value != "")
+									formFields[name] = value;
+							} else if (name != null && name.Length > 0) {
+								formFields[name] = (value == null) ? "" : value;
+							}
                             break;
+
+						case "textarea":
+							formFields[name] = node.InnerText;
+							break;
+
+						case "select":
+							value = null;
+							var options = SelectOption.GetOptionsFromSelectNode(node);
+
+							// now that we have all of the options parsed, let's get the selected value
+							if (options.Count > 0) {
+								value = options.First().FormValue; // default to first
+								foreach (var option in options) {
+									if (option.IsSelected) {
+										value = option.FormValue;
+										break;
+									}
+								}
+							}
+
+							if (value != null)
+								formFields[name] = value;
+
+							break;
                     }
                 }
+
+				// Console.WriteLine("POST {0}", action);
+				//for (int i = 0; i < formFields.Count; i++)
+				//	Console.WriteLine("\t{0} = {1}", formFields.Keys[i], formFields[i]);
 
                 // Make the actual request.  We also update some variables on the Driver, like Visit() normally does
                 byte[] response    = Driver.Client.UploadValues(action, "POST", formFields);
@@ -264,13 +406,16 @@ namespace Mara.Drivers {
                 set {
                     if (Name == "input")
                         this["value"] = value;
+					else if (Name == "textarea")
+						this.Text = value;
                     else
                         throw new Exception("We don't know how to set the value of non-input element: " + this.ToString());
                 }
             }
 
             public string Text {
-                get { return Node.InnerText.Cleanup(); }
+                get { return (Name == "textarea") ? Node.InnerHtml : Node.InnerText.Cleanup(); } // don't cleanup textarea! return the raw InnerHtml content
+				set { Node.InnerHtml = value; }
             }
 
             public string this[string attributeName] {

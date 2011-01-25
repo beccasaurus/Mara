@@ -19,8 +19,22 @@
       <label for="DogName">Dog name</label>
       <input type="text" id="DogName" name="DogName" placeholder="Enter dog name here" value="<%= Request["DogName"] %>" autofocus="true" />
 
+      <!-- DogBreed doesn't have an ID attribute on purpose ... don't add it. -->
       <label for="DogBreed">Breed of dog</label>
       <input type="text" name="DogBreed" placeholder="eg. Golden Retriever" value="<%= Request["DogBreed"] %>" />
+
+	  <label for="HairType">Hair Type</label>
+	  <select id="HairType" name="HairType">
+		<option value="FuzzyValue">Fuzzy</option>
+		<option>Poofy</option>
+		<option>Poodle-y</option>
+		<option value="LongHairValue">Long</option>
+	  </select>
+
+      <label for="DogBio">Dog Bio:</label>
+      <textarea id="DogBio" name="DogBio"></textarea>
+
+	  <p><input type="checkbox" id="DogIsGood" name="DogIsGood" /><label for="DogIsGood">Dog is good?</label></p>
 
       <input type="submit" value="POST some stuff" />
   </fieldset>
