@@ -35,6 +35,18 @@ namespace Mara.Drivers {
 				IsSelected = false;
 			}
 
+            public void Select() {
+                if (Node.Attributes.Contains("selected"))
+					Node.Attributes["selected"].Value = "seleted";
+				else
+					Node.Attributes.Append("selected", "selected");
+            }
+
+            public void Deselect() {
+                if (Node.Attributes.Contains("selected"))
+                    Node.Attributes.Remove("selected");
+            }
+
 			public static List<SelectOption> GetOptionsFromSelectNode(HtmlNode selectNode) {
 				var options = new List<SelectOption>();
 
@@ -262,6 +274,7 @@ namespace Mara.Drivers {
 		}
 
 		public void Select(string dropdown, string option) {
+            // Console.WriteLine("Select({0}, {1})", dropdown, option);
             var id_XPath   = "//select[@id='" + dropdown + "']";
             var name_XPath = "//select[@name='" + dropdown + "']";
 
@@ -282,12 +295,17 @@ namespace Mara.Drivers {
 				return (text == option.Trim() || value == option.Trim());
 			});
 
-			// update the <option> node to have selected="selected" or, if not found, throw ElementNotFoundException
+            // if we found it, make sure to DESELECT all other <options>
+            if (matchingOption != null)
+                foreach (var o in options)
+                    o.Deselect();
+
+            // Console.WriteLine("matching option value:{0} selected:{1} html:{2}", matchingOption.Value, matchingOption.IsSelected, matchingOption.Node.InnerHtml);
+
+			// update the <option> node to have selected="selected" or, if not found, throw ElementNotFoundException);
 			if (matchingOption != null) {
-				if (matchingOption.Node.Attributes.Contains("selected"))
-					matchingOption.Node.Attributes["selected"].Value = "seleted";
-				else
-					matchingOption.Node.Attributes.Append("selected", "selected");
+				matchingOption.Select();
+                // Console.WriteLine("Set selected = selected");
 			} else
                 throw new ElementNotFoundException("<option> with Text or Value: " + option);
 		}
@@ -351,6 +369,10 @@ namespace Mara.Drivers {
 					if (name == null || name.Trim().Length == 0)
 						continue;
 
+                    if (new string[] { "input", "textarea", "select" }.Contains((node.Name))) {
+                        // Console.WriteLine("Processing for submit: <{0} name='{1}' type='{2}' value='{3}' />", node.Name, name, type, value);
+                    }
+
                     switch (node.Name.ToLower()) {
 
                         case "input":
@@ -368,10 +390,15 @@ namespace Mara.Drivers {
 							break;
 
 						case "select":
+                            // Console.WriteLine("Found a <select> to submit: {0}", name);
 							value = null;
 							var options = SelectOption.GetOptionsFromSelectNode(node);
 
-							// now that we have all of the options parsed, let's get the selected value
+                            // Console.WriteLine("options");
+                            //foreach (var option in options)
+                                // Console.WriteLine("\t{0} selected? {1}", option.FormValue, option.IsSelected);
+
+							// now that we have all of the options parsed, let's get the selected value););
 							if (options.Count > 0) {
 								value = options.First().FormValue; // default to first
 								foreach (var option in options) {
@@ -382,6 +409,8 @@ namespace Mara.Drivers {
 								}
 							}
 
+                            // Console.WriteLine("This select's value is: {0}", value);
+
 							if (value != null)
 								formFields[name] = value;
 
@@ -389,9 +418,10 @@ namespace Mara.Drivers {
                     }
                 }
 
-				// Console.WriteLine("POST {0}", action);
-				//for (int i = 0; i < formFields.Count; i++)
-				//	Console.WriteLine("\t{0} = {1}", formFields.Keys[i], formFields[i]);
+				Console.WriteLine("POST {0}", action);
+				for (int i = 0; i < formFields.Count; i++)
+					Console.WriteLine("\t{0} = {1}", formFields.Keys[i], formFields[i]);
+                Console.WriteLine("");
 
                 // Make the actual request.  We also update some variables on the Driver, like Visit() normally does
                 byte[] response    = Driver.Client.UploadValues(action, "POST", formFields);

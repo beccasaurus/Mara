@@ -106,6 +106,8 @@ namespace Mara.DriverSpecs {
 			Assert.That(Find("//dd[@data-variable='HairType']").Text, Is.EqualTo("LongHairValue"));
 
 			// TODO Can Deselect() [defaults back to the first field)
+
+            // TODO make sure that Select() deselects all other options in this <select>!!!!
 		}
 
         [Test]
