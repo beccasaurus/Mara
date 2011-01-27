@@ -334,7 +334,7 @@ namespace Mara.Drivers {
             public void Click() {
                 if (Name == "a")
                     FollowLink();
-                else if (Name == "input" && this["type"] == "submit")
+                else if (Name == "input" && (this["type"] == "submit" || this["type"] == "image"))
                     SubmitForm();
                 else
                     throw new Exception("I don't know how to Click() element: " + this.ToString());
