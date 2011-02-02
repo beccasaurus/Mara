@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using System.Net;
+using System.Web;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
@@ -418,16 +419,46 @@ namespace Mara.Drivers {
                     }
                 }
 
-				Console.WriteLine("POST {0}", action);
+				var method = "POST";
+				if (ParentForm.Attributes.Contains("method"))
+					method = ParentForm.Attributes["method"].Value.ToUpper();
+
+				Console.WriteLine("{0} {1}", method, action);
 				for (int i = 0; i < formFields.Count; i++)
 					Console.WriteLine("\t{0} = {1}", formFields.Keys[i], formFields[i]);
                 Console.WriteLine("");
 
                 // Make the actual request.  We also update some variables on the Driver, like Visit() normally does
-                byte[] response    = Driver.Client.UploadValues(action, "POST", formFields);
-                Driver.Body        = Encoding.UTF8.GetString(response);
-                Driver.Doc         = null;
-                Driver._currentUrl = action;
+                byte[] response;
+			
+				if (method == "POST") {
+					response = Driver.Client.UploadValues(action, "POST", formFields);
+					Driver.Body        = Encoding.UTF8.GetString(response);
+					Driver.Doc         = null;
+					Driver._currentUrl = action;
+
+				} else {
+					var url = action;
+
+					if (formFields.Count > 0) {
+						if (action.Contains("?"))
+							action += "&";
+						else
+							action += "?";
+					}
+
+					// loop through the GET form's parameters and add them as query strings ...
+					for (int i = 0; i < formFields.Count; i++) {
+						action += string.Format("{0}={1}", formFields.Keys[i], HttpUtility.UrlEncode(formFields[i]));
+						if (i != formFields.Count - 1)
+							action += "&";
+					}
+					
+					Console.WriteLine("GET {0}", action);
+
+					// simply Visit() the url
+					Driver.Visit(action);
+				}
             }
 
             string _value;

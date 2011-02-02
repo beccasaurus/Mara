@@ -44,6 +44,7 @@ namespace Mara.DriverSpecs {
 
             Assert.Null(Find("//dd[@data-variable='DogName']"));
             ClickButton("POST some stuff");
+			Assert.That(Find("//span[@class='requestMethod']").Text, Is.EqualTo("POST"));
 
             // When you submit the form a <DL> is printed with info about all of the POSTed variables
             Assert.NotNull(Find("//dd[@data-variable='DogName']"));
@@ -162,5 +163,17 @@ namespace Mara.DriverSpecs {
             Click("POST some stuff");
             Assert.True(Page.HasContent("Snoopy"));
         }
+
+		[Test]
+		public void CanSubmitAFormWithMethodGET() {
+			FillIn("q", "My Search");
+			ClickButton("Search");
+
+			Assert.That(Find("//span[@class='requestMethod']").Text, Is.EqualTo("GET"));
+
+            Assert.That(Find("//dd[@data-variable='q']").Text,  Is.EqualTo("My Search"));
+
+			Assert.That(Find("id('querystrings')").Text, Is.StringContaining("q = My Search"));
+		}
     }
 }

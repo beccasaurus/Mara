@@ -1,6 +1,8 @@
 <%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" Title="Untitled Page"  %>
 <asp:Content ID="Content" Runat="Server" ContentPlaceHolderID="Container" >
 
+<h3>Request method: <span class="requestMethod"><%= Request.HttpMethod %></span></h3>
+
 <% var postAndQueryStringVariables = new NameValueCollection(Request.Form); postAndQueryStringVariables.Add(Request.QueryString); %>
 <% if (postAndQueryStringVariables.Count > 0) { %>
 <h2>Params</h2>
@@ -12,6 +14,7 @@
 </dl>
 <div style="clear: left;" />
 <% } %>
+
 <h1>Form</h1>
 <form action="/Form.aspx" method="post">
   <fieldset>
@@ -38,6 +41,17 @@
 
       <input type="submit" value="POST some stuff" />
   </fieldset>
+</form>
+
+<h2>GET Form</h2>
+<pre id="querystrings">
+<% for (int i = 0; i < Request.QueryString.Count; i++) { %>
+<%= Request.QueryString.AllKeys[i] %> = <%= Request.QueryString[i] %>
+<% } %>
+</pre>
+<form action="/Form.aspx" method="get">
+    <input name="q" type="text" placeholder="Search query ..." />
+    <input type="submit" value="Search" />
 </form>
 
 <input type="text" name="OutsideOfForm" value="I am outside of the form!" />
