@@ -442,8 +442,8 @@ namespace Mara.Drivers {
             }
         }
 
-        bool TryToVisitInChrome(string path) {
-            webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+        bool TryToVisitInChrome(string url) {
+            webdriver.Navigate().GoToUrl(url);
             try {
                 webdriver.GetWindowHandle();
                 return true;
