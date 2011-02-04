@@ -1,2 +1,2 @@
 #! /bin/bash
-SAVE_AND_OPEN_PAGE=false DRIVER_NAME=Mara.Drivers.WebClient nunit-color-console bin/Debug/Mara.Specs.dll
+MARA_LOG=true SAVE_AND_OPEN_PAGE=false DRIVER_NAME=Mara.Drivers.WebClient nunit-color-console bin/Debug/Mara.Specs.dll

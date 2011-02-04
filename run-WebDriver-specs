@@ -4,4 +4,4 @@ if [[ -z "$BROWSER" ]]; then
 	echo "Set BROWSER environment variable to specify browser.  Using default."
 fi
 
-SAVE_AND_OPEN_PAGE=false DRIVER_NAME=Mara.Drivers.WebDriver nunit-color-console bin/Debug/Mara.Specs.dll
+MARA_LOG=true SAVE_AND_OPEN_PAGE=false DRIVER_NAME=Mara.Drivers.WebDriver nunit-color-console bin/Debug/Mara.Specs.dll
