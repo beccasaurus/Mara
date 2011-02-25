@@ -94,7 +94,12 @@ namespace Mara.Drivers {
             set { _client = value; }
         }
 
-        string AppHost { get { return Mara.AppHost; }}
+        string _appHost;
+
+        public virtual string AppHost {
+            get { return _appHost ?? Mara.AppHost; }
+            set { _appHost = value; }
+        }
 
         public void ResetSession() {
             _client = new CookieAwareWebClient();
@@ -103,11 +108,32 @@ namespace Mara.Drivers {
         public string Body { get; set; }
 
         public void Visit(string path) {
-			var url = (path.StartsWith("/")) ? (Mara.AppHost + path) : path;
+			var url = (path.StartsWith("/")) ? (AppHost + path) : path;
 
-            Body        = Client.DownloadString(url);
-            Doc         = null;
-            _currentUrl = url;
+            try {
+                Body        = Client.DownloadString(url);
+                Doc         = null;
+                _currentUrl = url;
+            } catch (WebException ex) {
+                // Incase something blows up below here, be sure to always print out the url
+                Console.WriteLine("WebException thrown when trying to request {0}.\n{1}", url, ex);
+                _currentUrl = url;
+
+                var response = ex.Response as HttpWebResponse;
+                if (response == null)
+                    throw new Exception(string.Format("WebException thrown when trying to get {0}.  {1}", url, ex));
+
+                var statusCode = (int) response.StatusCode;
+
+                // Read the body of the response
+                Body = null;
+                using (var reader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8))
+                    Body = reader.ReadToEnd();
+
+            } catch (Exception ex) {
+                Console.WriteLine("Unexpected exception thrown while trying to Visit {0}", url);
+                throw ex;
+            }
         }
 
         // also initialize forms here

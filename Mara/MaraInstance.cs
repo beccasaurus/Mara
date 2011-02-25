@@ -47,10 +47,7 @@ namespace Mara {
                 if (_page == null) _page = Mara.Driver;
                 return _page;
             }
-            set {
-                if (_page != null) _page.Close();
-                _page = value;
-            }
+            set { _page = value; }
         }
 
         public string Body              { get { return Page.Body;                }}
