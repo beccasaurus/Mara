@@ -380,7 +380,9 @@ namespace Mara.Drivers {
 
                 var host   = Driver.CurrentUrl.Replace(new Uri(Driver.CurrentUrl).PathAndQuery, ""); // http://localhost:1234
                 var action = (ParentForm.Attributes.Contains("action")) ? ParentForm.Attributes["action"].Value : Driver.CurrentUrl;
-                if (action.StartsWith("/"))
+                if (string.IsNullOrEmpty(action))
+                    action = Driver.CurrentUrl;
+                else if (action.StartsWith("/"))
                     action = host + action;
                 else if (! action.StartsWith("http"))
                     action = host + "/" + action;
