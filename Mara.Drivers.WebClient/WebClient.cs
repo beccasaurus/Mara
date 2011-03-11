@@ -15,6 +15,8 @@ using Mara;
 
 using HtmlAgilityPack;
 
+using Requestoring;
+
 namespace Mara.Drivers {
 
     /*
@@ -74,15 +76,35 @@ namespace Mara.Drivers {
 			}
 		}
 
-        // Little WebClient wrapper that tracks cookies for subsequent requests
+        /*
+        // Little WebClient wrapper that tracks cookies for subsequent requests ... ALSO gets the real final URL when redirects occur
         public class CookieAwareWebClient : System.Net.WebClient {
             CookieContainer cookies = new CookieContainer();
+
+            public Uri ResponseUri { get; set; }
+
             protected override WebRequest GetWebRequest(Uri address) {
+                Console.WriteLine("GetWebRequest({0})", address);
                 WebRequest request = base.GetWebRequest(address);
                 if (request is HttpWebRequest)
                     (request as HttpWebRequest).CookieContainer = cookies;
                 return request;
             }
+
+            protected override WebResponse GetWebResponse(WebRequest request)  {
+                Console.WriteLine("GetWebResponse({0})", request.RequestUri);
+                WebResponse response = null;
+                try {
+                    response    = base.GetWebResponse(request);
+                    Console.WriteLine("Location: {0}", response.Headers[HttpResponseHeader.Location]);
+                    ResponseUri = response.ResponseUri;
+                } catch (Exception ex) {
+                    Console.WriteLine("Problem getting response: {0}", ex);
+                    Console.WriteLine("Was requesting: {0}", request.RequestUri);
+                }
+                return response;
+
+            } 
         }
 
         CookieAwareWebClient _client;
@@ -93,7 +115,9 @@ namespace Mara.Drivers {
             }
             set { _client = value; }
         }
+         * */
 
+        Requestor _requestor;
         string _appHost;
 
         public virtual string AppHost {
@@ -101,38 +125,38 @@ namespace Mara.Drivers {
             set { _appHost = value; }
         }
 
+        public Requestor Requestor {
+            get {
+                if (_requestor == null) {
+                    _requestor = new Requestor();
+                    _requestor.EnableCookies();
+                    _requestor.AutoRedirect = true;
+                }
+                return _requestor;
+            }
+            set { _requestor = new Requestor(); }
+        }
+
         public void ResetSession() {
-            _client = new CookieAwareWebClient();
+            Requestor.Reset();
         }
 
         public string Body { get; set; }
 
         public void Visit(string path) {
 			var url = (path.StartsWith("/")) ? (AppHost + path) : path;
+            Console.WriteLine("Visit {0}", path);
+            Requestor.RootUrl = AppHost;
 
             try {
-                Body        = Client.DownloadString(url);
-                Doc         = null;
-                _currentUrl = url;
-            } catch (WebException ex) {
-                // Incase something blows up below here, be sure to always print out the url
-                Console.WriteLine("WebException thrown when trying to request {0}.\n{1}", url, ex);
-                _currentUrl = url;
-
-                var response = ex.Response as HttpWebResponse;
-                if (response == null)
-                    throw new Exception(string.Format("WebException thrown when trying to get {0}.  {1}", url, ex));
-
-                var statusCode = (int) response.StatusCode;
-
-                // Read the body of the response
-                Body = null;
-                using (var reader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8))
-                    Body = reader.ReadToEnd();
-
+                Requestor.Headers.Clear(); Requestor.PostData.Clear(); Requestor.QueryStrings.Clear();
+                Requestor.Get(url);
+                Body = Requestor.LastResponse.Body;
+                Doc  = null;
+                _currentUrl = Requestor.CurrentUrl;
             } catch (Exception ex) {
-                Console.WriteLine("Unexpected exception thrown while trying to Visit {0}", url);
-                throw ex;
+                Console.WriteLine("Exception thrown when trying to request {0}\n{1}", url, ex);
+                _currentUrl = url;
             }
         }
 
@@ -457,13 +481,19 @@ namespace Mara.Drivers {
                 Console.WriteLine("");
 
                 // Make the actual request.  We also update some variables on the Driver, like Visit() normally does
-                byte[] response;
 			
 				if (method == "POST") {
-					response = Driver.Client.UploadValues(action, "POST", formFields);
-					Driver.Body        = Encoding.UTF8.GetString(response);
-					Driver.Doc         = null;
-					Driver._currentUrl = action;
+
+                    Driver.Requestor.RootUrl = Driver.AppHost;
+                    Driver.Requestor.Headers.Clear(); Driver.Requestor.PostData.Clear(); Driver.Requestor.QueryStrings.Clear();
+                    for (int i = 0; i < formFields.Count; i++)
+                        Driver.Requestor.AddPostData(formFields.Keys[i], formFields[i]);
+                    
+                    Driver.Requestor.Post(action);
+
+                    Driver.Body        = Driver.Requestor.LastResponse.Body;
+                    Driver.Doc         = null;
+                    Driver._currentUrl = Driver.Requestor.CurrentUrl;
 
 				} else {
 					var url = action;
