@@ -54,7 +54,7 @@ namespace Mara {
             }
         }
 
-        static bool _runServer = true;
+        static bool _runServer = false;
         public static bool RunServer {
             get {
                 if (Environment.GetEnvironmentVariable("RUN_SERVER") != null)
@@ -82,7 +82,7 @@ namespace Mara {
                 if (Environment.GetEnvironmentVariable("APP_HOST") != null)
                     return Environment.GetEnvironmentVariable("APP_HOST");
                 if (_appHost != null) return _appHost;
-                else                  return (Server == null) ? null : Server.AppHost;
+                else                  return (Server == null || ! RunServer) ? null : Server.AppHost;
             }
             set { _appHost = value; }
         }

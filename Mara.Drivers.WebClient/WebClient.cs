@@ -402,7 +402,8 @@ namespace Mara.Drivers {
                 if (ParentForm == null)
                     throw new Exception("Cannot click button that is not in a form: " + this.ToString());
 
-                var host   = Driver.CurrentUrl.Replace(new Uri(Driver.CurrentUrl).PathAndQuery, ""); // http://localhost:1234
+				var uri    = new Uri(Driver.CurrentUrl);
+				var host   = string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, uri.IsDefaultPort ? null : ":" + uri.Port);
                 var action = (ParentForm.Attributes.Contains("action")) ? ParentForm.Attributes["action"].Value : Driver.CurrentUrl;
                 if (string.IsNullOrEmpty(action))
                     action = Driver.CurrentUrl;
@@ -471,7 +472,8 @@ namespace Mara.Drivers {
                     }
                 }
 
-				var method = "POST";
+				// Default to GET because, if there's no attribute, a GET is the default
+				var method = "GET";
 				if (ParentForm.Attributes.Contains("method"))
 					method = ParentForm.Attributes["method"].Value.ToUpper();
 
