@@ -50,6 +50,11 @@ namespace Mara {
             set { _page = value; }
         }
 
+        public string Root {
+			get { return Page.Root;  }
+			set { Page.Root = value; }
+		}
+
         public string Body              { get { return Page.Body;                }}
         public string CurrentUrl        { get { return Page.CurrentUrl;          }}
         public string CurrentPath       { get { return Page.CurrentPath;         }}

@@ -120,6 +120,11 @@ namespace Mara.Drivers {
         Requestor _requestor;
         string _appHost;
 
+		public virtual string Root {
+			get { return AppHost;  }
+			set { AppHost = value; }
+		}
+
         public virtual string AppHost {
             get { return _appHost ?? Mara.AppHost; }
             set { _appHost = value; }

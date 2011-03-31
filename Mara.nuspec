@@ -2,7 +2,7 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>Mara</id>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
     <authors>remi Taylor</authors>
     <description>Automated Web Application Testing in .NET</description>
     <projectUrl>https://github.com/remi/Mara</projectUrl>

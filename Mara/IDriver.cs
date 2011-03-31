@@ -10,6 +10,7 @@ namespace Mara.Drivers {
      */
     public interface IDriver {
 
+		string Root                { get; set; }
         string Body                { get; }
         string CurrentUrl          { get; }
         string CurrentPath         { get; }

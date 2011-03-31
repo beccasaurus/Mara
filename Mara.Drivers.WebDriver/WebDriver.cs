@@ -238,9 +238,21 @@ namespace Mara.Drivers {
             webdriver.Navigate().Refresh();
         }
 
+        string _appHost;
+
+		public virtual string Root {
+			get { return AppHost;  }
+			set { AppHost = value; }
+		}
+
+        public virtual string AppHost {
+            get { return _appHost ?? Mara.AppHost; }
+            set { _appHost = value; }
+        }
+
         // TODO I don't like using Mara.AppHost ... ?  using something static feels icky?  maybe?
         public void Visit(string path) {
-			var url = (path.StartsWith("/")) ? (Mara.AppHost + path) : path;
+			var url = (path.StartsWith("/")) ? (AppHost + path) : path;
 
             Mara.Log("Visit({0})", url);
 
