@@ -16,14 +16,19 @@ namespace Mara {
      */
     public class MaraSetUpFixture {
 
-        public static Mara MaraInstance;
+		public static Mara _mara;
+
+        public static Mara MaraInstance {
+			get { return _mara ?? (_mara = new Mara()); }
+			set { _mara = value; }
+		}
 
         [SetUp]
         public void MaraSetUp() {
             Mara.Log("Global MaraSetUpFixture.SetUp");
-            if (MaraInstance == null) {
-                MaraInstance = new Mara();
-                MaraInstance.Initialize();
+            if (_mara == null) {
+                _mara = new Mara();
+                _mara.Initialize();
             }
         }
 
@@ -41,6 +46,11 @@ namespace Mara {
      */
     public class MaraTest : IDriver {
         public IDriver Page { get { return MaraSetUpFixture.MaraInstance; }}
+
+		public IDriver CurrentDriver {
+			get { return MaraSetUpFixture.MaraInstance.Page;  }
+			set { MaraSetUpFixture.MaraInstance.Page = value; }
+		}
 
         // Everything below here can be copy/pasted from Mara/MaraInstance.cs
 
