@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>Mara.SpecFlow</id>
+    <version>1.0.0.0</version>
+    <authors>remi Taylor</authors>
+    <description>SpecFlow extensions for Mara</description>
+    <projectUrl>https://github.com/remi/Mara</projectUrl>
+    <dependencies>
+      <dependency id="Mara" version="1.0.0.2" />
+      <dependency id="SpecFlow" version="1.4.0" />
+      <dependency id="NUnit" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="README.markdown" />
+    <file src="bin\Release\Mara.SpecFlow.dll" target="lib" />
+    <file src="Mara.SpecFlow\**\*.cs" target="src" />
+  </files>
+</package>

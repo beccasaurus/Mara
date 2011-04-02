@@ -2,12 +2,12 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>Mara</id>
-    <version>1.0.0.1</version>
+    <version>1.0.0.2</version>
     <authors>remi Taylor</authors>
     <description>Automated Web Application Testing in .NET</description>
     <projectUrl>https://github.com/remi/Mara</projectUrl>
     <dependencies>
-      <dependency id="Requestor" />
+      <dependency id="Requestor" version="1.0.2.2" />
     </dependencies>
   </metadata>
   <files>
@@ -17,7 +17,7 @@
     <file src="bin\Release\Mara.dll" target="lib" />
 
     <file src="bin\Release\Mara.Drivers.WebClient.dll" target="lib" />
-    <file src="bin\Release\HtmlAgilityPack.dll.dll" target="lib" />
+    <file src="bin\Release\HtmlAgilityPack.dll" target="lib" />
 
     <file src="bin\Release\Mara.Drivers.WebDriver.dll" target="lib" />
 
